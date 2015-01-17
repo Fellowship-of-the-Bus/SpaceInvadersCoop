@@ -5,6 +5,9 @@ trait Health {
     
     def takeDmg(amt: Int) = {
         hp -= amt
+        if (hp <= 0) {
+            inactivate
+        }
     }
 
     def getHp() = hp 
