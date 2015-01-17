@@ -1,8 +1,19 @@
 package spaceInvader.gameObject
 import IDMap._
 
-abstract class Projectile (x: Int, y: Int, val dmg: Int, dir: Char, dx: Int, dy: Int) extends VelObject(x,y,dir,dx,dy) {
+object Projectile {
+    val size = 10
 
+    def apply(id: Int, x: Int, y: Int, dir: Char, dx: Int, dy: Int) {
+        id match{
+            case BulletID => new Bullet(x,y,dir,dx,dy)
+            case MissileID => new Missile(x,y,dir,dx,dy)
+        }
+    }
+}
+
+abstract class Projectile (x: Int, y: Int, val dmg: Int, dir: Char, dx: Int, dy: Int) extends VelObject(x,y,dir,dx,dy) {
+    val size = Projectile.size
 }
 
 object Bullet {

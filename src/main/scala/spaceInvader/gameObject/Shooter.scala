@@ -12,9 +12,12 @@ trait Shooter {
         val px: Int = x
         val py: Int = y
 
-        if (dir == Up) { y += size / 2 }
+        if (dir == Up) { y -= (size + Projectile.size) / 2 }
+        if (dir == Down) { y += (size + Projectile.size) / 2 }
+        if (dir == Left) { x -= (size + Projectile.size) / 2 }
+        if (dir == Right) { x += (size + Projectile.size) / 2 }
 
-        new Projectile(x,y,dmg,dir,dx,dy);
+        Projectile(shotType, x, y, dir, dx, dy);
     }
 }
 
