@@ -1,4 +1,6 @@
 package spaceInvader.gameObject
+import GameObject._
+import IDMap._
 
 object Enemy {
     def apply () {
@@ -13,7 +15,7 @@ object Drone {
     val maxHp = 1
 }
 
-class Drone(x: Int, y: Int, dir: Char, dx: Int, dy: Int) extends Projectile(x, y, dmg, dir, dx, dy) {
+class Drone(x: Int, y: Int, dir: Char, dx: Int, dy: Int) extends Enemy(x, y, dir, dx, dy) {
     def id = DroneID
-    hp = maxHp
+    var hp = Drone.maxHp
 }

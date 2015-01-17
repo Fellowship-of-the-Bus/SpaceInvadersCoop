@@ -4,20 +4,21 @@ import GameObject._
 trait Shooter {
     def x: Int
     def y: Int
+
     def size: Int
-    def dir: Int
+    def dir: Char
     def shotType: Int
 
-    def shoot(dmg: Int, dx: Int, dy: Int) = {
-        val px: Int = x
-        val py: Int = y
+    def shoot = {
+        var px: Int = x
+        var py: Int = y
 
-        if (dir == Up) { y -= (size + Projectile.size) / 2 }
-        if (dir == Down) { y += (size + Projectile.size) / 2 }
-        if (dir == Left) { x -= (size + Projectile.size) / 2 }
-        if (dir == Right) { x += (size + Projectile.size) / 2 }
+        if (dir == Up) { py -= (size + Projectile.size) / 2 }
+        if (dir == Down) { py += (size + Projectile.size) / 2 }
+        if (dir == Left) { px -= (size + Projectile.size) / 2 }
+        if (dir == Right) { px += (size + Projectile.size) / 2 }
 
-        Projectile(shotType, x, y, dir, dx, dy);
+        Projectile(shotType, px, py, dir, 0, -2);
     }
 }
 
