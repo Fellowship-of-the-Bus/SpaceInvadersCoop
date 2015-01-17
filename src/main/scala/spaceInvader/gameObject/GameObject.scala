@@ -12,6 +12,11 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
     var y: Int = yc
     val size: Int = 40
     
+    def id: Int
+
+    private var isActive = true
+    def active = isActive
+    def inactivate = isActive = false
     def move() = {}
 }
     

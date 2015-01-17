@@ -22,12 +22,14 @@ trait Shooter {
         if ( shotTimer == 0 ) {
             shotTimer = 5
 
-           if (dir == Up) { py -= (size + Projectile.size) / 2 }
-           if (dir == Down) { py += (size + Projectile.size) / 2 }
-           if (dir == Left) { px -= (size + Projectile.size) / 2 }
-           if (dir == Right) { px += (size + Projectile.size) / 2 }
+            if (dir == Up) { py -= (size + Projectile.size) / 2 }
+            if (dir == Down) { py += (size + Projectile.size) / 2 }
+            if (dir == Left) { px -= (size + Projectile.size) / 2 }
+            if (dir == Right) { px += (size + Projectile.size) / 2 }
 
-           Projectile(shotType, px, py, dir, 0, -2);
+           Some(Projectile(shotType, px, py, dir, 0, -2));
+        } else {
+            None
         }
     }
 }

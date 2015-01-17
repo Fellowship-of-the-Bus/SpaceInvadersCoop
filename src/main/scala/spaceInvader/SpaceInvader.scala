@@ -5,7 +5,7 @@ import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, 
 class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   import gameObject._
 
-  val player = new Player(100, 100)
+  val player = new Player(100, 400)
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
   var enemyProjectiles: List[Projectile] = List()
@@ -14,27 +14,68 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   override def init(gc: GameContainer) = {
     gc.setShowFPS(true)
   }
-  override def update(gc: GameContainer, delta: Int) = {
-    val input = gc.getInput
+
+  def cleanup() = {
+    alliedProjectiles = alliedProjectiles.filter(_.active)
+    enemyProjectiles = enemyProjectiles.filter(_.active)
+    enemies = enemies.filter(_.active)
+  }
+
+  def move(implicit input: Input) = {
     val moveAmt = 5
 
-    if (input.isKeyDown(Input.KEY_UP)) {
-      player.move(0, -moveAmt)
-    } else if (input.isKeyDown(Input.KEY_DOWN)) {
-      player.move(0, moveAmt)
+    val xamt =
+      if (input.isKeyDown(Input.KEY_LEFT)) -moveAmt
+      else if (input.isKeyDown(Input.KEY_RIGHT)) moveAmt
+      else 0
+    val newx = player.x + xamt
+
+    val yamt =
+      if (input.isKeyDown(Input.KEY_UP)) -moveAmt
+      else if (input.isKeyDown(Input.KEY_DOWN)) moveAmt
+      else 0
+    val newy = player.y + yamt
+
+    import SpaceInvader._
+    if (newx + player.size/2 < Width && newx - player.size/2 > 0) {
+      player.move(xamt, 0)
+    }
+    if (newy + player.size/2 < Height && newy - player.size/2 > Height/4) {
+      player.move(0, yamt)
     }
 
-    if (input.isKeyDown(Input.KEY_LEFT)) {
-      player.move(-moveAmt, 0)
-    } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-      player.move(moveAmt, 0)
-    } 
+    for (p <- alliedProjectiles) {
+      p.move()
+      if (p.x - p.size/2 > Width || p.x + p.size/2 < 0) {
+        p.inactivate
+      }
+      if (p.y - p.size/2 > Height || p.y + p.size/2 < 0) {
+        p.inactivate
+      }
+      // for (e <- enemies) 
+    }
+  }
+
+  var counter = 0
+  override def update(gc: GameContainer, delta: Int) = {
+    implicit val input = gc.getInput
+    
+    move
 
     if (input.isKeyDown(Input.KEY_SPACE)) {
-      alliedProjectiles = player.shoot :: alliedProjectiles
+      val shot = player.shoot
+      shot match {
+        case Some(s) => alliedProjectiles = s :: alliedProjectiles
+        case _ => ()
+      }
     }
+    player.tick
 
-    for (p <- alliedProjectiles) p.move()
+    counter = counter + 1
+    if (counter == 120) {
+      counter = 0
+      cleanup
+    }
   }
   override def render(gc: GameContainer, g: Graphics) = {
     g.setColor(Color.yellow)
@@ -47,10 +88,13 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 }
 
 object SpaceInvader extends App {
+  val Width = 640
+  val Height = 480
+
   try {
     println("Library path is: " + System.getProperty("java.library.path"))
     val appgc = new AppGameContainer(new SpaceInvader("Simple Slick Game"))
-    appgc.setDisplayMode(640, 480, false)
+    appgc.setDisplayMode(Width, Height, false)
     appgc.setTargetFrameRate(60)
     appgc.setVSync(true)
     appgc.start()
