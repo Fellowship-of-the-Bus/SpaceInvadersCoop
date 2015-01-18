@@ -1,6 +1,6 @@
 package spaceInvader
 import java.util.logging.{Level, Logger}
-import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input}
+import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
 
 class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   import gameObject._
@@ -13,6 +13,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 
   override def init(gc: GameContainer) = {
     gc.setShowFPS(true)
+    // images(player.id)
   }
 
   def cleanup() = {
@@ -44,7 +45,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       player.move(0, yamt)
     }
 
-    for (p <- alliedProjectiles) {
+    for (p <- alliedProjectiles; if (p.active)) {
       p.move()
       if (p.x - p.size/2 > Width || p.x + p.size/2 < 0) {
         p.inactivate
@@ -52,7 +53,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       if (p.y - p.size/2 > Height || p.y + p.size/2 < 0) {
         p.inactivate
       }
-      for (e <- enemies) {
+      for (e <- enemies; if (e.active)) {
         var ex1 = e.x - e.size /2
         var ex2 = e.x + e.size /2
         var ey1 = e.y - e.size /2
@@ -76,20 +77,20 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       }
     }
 
-    for (e <- enemies) {
+    for (e <- enemies; if (e.active)) {
       e.move()
-      e.shoot()
-      if (e.x - e.size/2 > Width || e.x + e.size/2 < 0) {
+      // e.shoot()
+      if (e.x + e.size/2 > Width || e.x - e.size/2 < 0) {
         e.dx = -e.dx
       }
-      if (e.y - e.size/2 > Height || e.y + e.size/2 < 0) {
+      if (e.y - e.size/2 > Height) {
         e.inactivate
       }
     }
   }
 
   var counter = 0
-  var threshhold = 600
+  var threshhold = 240
   override def update(gc: GameContainer, delta: Int) = {
     implicit val input = gc.getInput
     
@@ -109,35 +110,50 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       cleanup
     }
     if (counter == threshhold) {
-      enemies = Enemy :: enemies
+      def spawnEnemy() = for {
+        i <- 0 until 10
+      } enemies = Enemy() :: enemies
+      spawnEnemy()
       if (threshhold % 60 == 0) {
-        enemies = Enemy :: enemies
+        spawnEnemy()
       }
-      if (threshhold > 125)  
+      if (threshhold > 125) {
         threshhold -= 5
       }
       counter = 0
     }
   }
   override def render(gc: GameContainer, g: Graphics) = {
-    g.setColor(Color.yellow)
-    g.drawRect(player.x-player.size/2, player.y-player.size/2, player.size, player.size)
+    import IDMap._
 
-    for (p <- alliedProjectiles) g.drawOval(p.x-p.size/2, p.y-p.size/2, p.size, p.size)
+    g.setColor(Color.yellow)
+    // g.drawRect(player.x-player.size/2, player.y-player.size/2, player.size, player.size)
+    g.drawImage(images(player.id), player.x-player.size/2, player.y-player.size/2)
+    
+    // for (p <- alliedProjectiles; if (p.active)) g.drawOval(p.x-p.size/2, p.y-p.size/2, p.size, p.size)
+    // for (e <- enemies; if (e.active)) g.fillRoundRect(e.x-e.size/2, e.y-e.size/2, e.size, e.size, 5)
+    // for (p <- enemyProjectiles; if (p.active)) g.fillOval(p.x-p.size/2, p.y-p.size/2, p.size, p.size)
+
+    for (p <- alliedProjectiles; if (p.active)) g.drawImage(images(p.id), p.x-p.size/2, p.y-p.size/2)
+    for (e <- enemies; if (e.active)) g.drawImage(images(e.id), e.x-e.size/2, e.y-e.size/2)
+    for (p <- enemyProjectiles; if (p.active)) g.drawImage(images(p.id), p.x-p.size/2, p.y-p.size/2)
 
     g.drawString("Hi!", 100, 100)
   }
 }
 
 object SpaceInvader extends App {
+  def makeImg(loc: String) = new Image(loc)
+
   val Width = 640
   val Height = 480
+  val FrameRate = 60
 
   try {
     println("Library path is: " + System.getProperty("java.library.path"))
     val appgc = new AppGameContainer(new SpaceInvader("Simple Slick Game"))
     appgc.setDisplayMode(Width, Height, false)
-    appgc.setTargetFrameRate(60)
+    appgc.setTargetFrameRate(FrameRate)
     appgc.setVSync(true)
     appgc.start()
   } catch {

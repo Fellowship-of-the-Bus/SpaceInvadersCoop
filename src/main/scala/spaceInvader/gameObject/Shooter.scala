@@ -19,15 +19,21 @@ trait Shooter {
     def shoot = {
         var px: Int = x
         var py: Int = y
+
         if ( shotTimer == 0 ) {
             shotTimer = 5
 
-            if (dir == Up) { py -= (size + Projectile.size) / 2 }
-            if (dir == Down) { py += (size + Projectile.size) / 2 }
-            if (dir == Left) { px -= (size + Projectile.size) / 2 }
-            if (dir == Right) { px += (size + Projectile.size) / 2 }
+            if (dir == Up) { 
+                py -= (size + Projectile.size) / 2
+            } else if (dir == Down) { 
+                py += (size + Projectile.size) / 2 
+            } else if (dir == Left) { 
+                px -= (size + Projectile.size) / 2 
+            } else if (dir == Right) { 
+                px += (size + Projectile.size) / 2 
+            }
 
-           Some(Projectile(shotType, px, py, dir, 0, -2));
+           Some(Projectile(shotType, px, py, dir));
         } else {
             None
         }

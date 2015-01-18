@@ -1,4 +1,5 @@
 package spaceInvader.gameObject
+import spaceInvader.SpaceInvader._
 
 object IDMap{
     val playerID = 1
@@ -15,9 +16,14 @@ object IDMap{
 
         DroneID -> "img/Drone.png",
 
-        BulletID -> "img/Bullet.png",
-        MissileID -> "img/Missile.png",
+        BulletID -> "img/Bullet.png"//,
+        // MissileID -> "img/Missile.png",
 
-        Power1ID -> "img/player.png"
+        // Power1ID -> "img/player.png"
     )
+
+    lazy val images = imageMap.map { x =>
+      val (id, loc) = x
+      id -> makeImg(loc)
+    }
 }
