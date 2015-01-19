@@ -12,7 +12,7 @@ object IDMap{
     val Power1ID = 201
 
     val imageMap = Map(
-        playerID -> "img/player.png",
+        playerID -> "img/Player.png",
 
         DroneID -> "img/Drone.png",
 
