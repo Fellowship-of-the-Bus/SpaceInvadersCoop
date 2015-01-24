@@ -70,11 +70,37 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       }
     }
 
+    for (p <- enemyProjectiles; if (p.active)) {
+      val (px1, py1) = p.topLeftCoord
+      val (px2, py2) = p.bottomRightCoord
+      p.move()
+      // detect leaving the game bounds
+      if (px1 > Width || px2 < 0) {
+        p.inactivate
+      }
+      if (py1 > Height || py2 < 0) {
+        p.inactivate
+      }
+      // detect collision with enemies
+      if (p.collision(player)) {
+          player.takeDmg(p.dmg)
+          p.inactivate
+      }
+    }
+
     // move all active enemies and deactivate if 
     // they leave the bottom of the arena
     for (e <- enemies; if (e.active)) {
       e.move()
-      // e.shoot()
+      e match {
+        case sh: Shooter => 
+          val shot = sh.shoot
+          shot match {
+            case Some(s) => enemyProjectiles = s :: enemyProjectiles
+            case _ => ()
+          }
+          sh.tick()
+      }
       if (e.x + e.size/2 > Width || e.x - e.size/2 < 0) {
         e.dx = -e.dx
       }
@@ -90,24 +116,22 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     implicit val input = gc.getInput
     
     move
-
-    if (input.isKeyDown(Input.KEY_SPACE)) {
-      val shot = player.shoot
-      shot match {
-        case Some(s) => alliedProjectiles = s :: alliedProjectiles
-        case _ => ()
-      }
-    }
-    player.tick
-
-    for (e <- enemies; if (e.active)) {
-      if (player.collision(e)) {
-          e.takeDmg(100)
-          player.takeDmg(e.getHp)
-          if (player.getHp <= 0) {
-            player.inactivate
-          }
+    if (player.active) {
+      if (input.isKeyDown(Input.KEY_SPACE)) {
+        val shot = player.shoot
+        shot match {
+          case Some(s) => alliedProjectiles = s :: alliedProjectiles
+          case _ => ()
         }
+      }
+      player.tick
+
+      for (e <- enemies; if (e.active)) {
+        if (player.collision(e)) {
+            player.takeDmg(e.getHp)
+            e.takeDmg(100)
+        }
+      }
     }
 
     counter = counter + 1

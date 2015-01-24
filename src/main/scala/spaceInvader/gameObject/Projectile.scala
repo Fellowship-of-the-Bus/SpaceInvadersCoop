@@ -9,6 +9,7 @@ object Projectile {
         id match{
             case BulletID => new Bullet(x,y,dir)
             case MissileID => new Missile(x,y,dir)
+            case PBulletID => new PBullet(x,y,dir)
         }
     }
 }
@@ -50,5 +51,14 @@ object Missile {
 
 class Missile(x: Int, y: Int, dir: Char) extends Projectile(x, y, Missile.dmg, dir, Missile.vel) {
     def id = MissileID
+}
+
+object PBullet {
+    val dmg: Int = 1
+    val vel = 2
+}
+
+class PBullet(x: Int, y: Int, dir: Char) extends Projectile(x, y, PBullet.dmg, dir, PBullet.vel) {
+    def id = PBulletID
 }
 

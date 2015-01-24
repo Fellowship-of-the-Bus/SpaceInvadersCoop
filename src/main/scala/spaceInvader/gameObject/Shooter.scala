@@ -8,7 +8,8 @@ trait Shooter {
     def dir: Char
     def shotType: Int
 
-    var shotTimer = 0
+    def shotInterval: Int
+    var shotTimer = shotInterval
 
     def tick() = {
         if ( shotTimer > 0 ) {
@@ -21,8 +22,7 @@ trait Shooter {
         var py: Int = y
 
         if ( shotTimer == 0 ) {
-            shotTimer = 5
-
+            shotTimer = shotInterval
             if (dir == Up) { 
                 py -= (size + Projectile.size) / 2
             } else if (dir == Down) { 

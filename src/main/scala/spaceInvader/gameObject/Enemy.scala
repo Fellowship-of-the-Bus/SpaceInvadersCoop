@@ -34,6 +34,8 @@ class Drone(x: Int, y: Int, dir: Char) extends Enemy(x, y, dir) with Shooter {
     var hp = Drone.maxHp
     def shotType = Drone.shotType
 
+    val shotInterval = 60 * 3
+
     dx =
       if (nextInt(2) % 2 == 0) {1}
       else {-1}

@@ -22,7 +22,7 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
     def topLeftCoord() = (x-size/2, y-size/2)
     def bottomRightCoord() = (x+size/2, y+size/2)
 
-    def collision(cand: GameObject) = {
+    def collision(cand: GameObject) = if (active && cand.active) {
         val (x1, y1) = topLeftCoord
         val (x2, y2) = bottomRightCoord
         val (cx1, cy1) = cand.topLeftCoord
@@ -36,5 +36,5 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
         val yOver = inRange(cy1,y1,y2) || inRange(y1, cy1, cy2)
 
         xOver && yOver
-    }
+    } else false
 }

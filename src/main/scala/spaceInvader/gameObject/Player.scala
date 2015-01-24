@@ -4,9 +4,11 @@ import GameObject._
 
 class Player (xc: Int, yc: Int) extends GameObject (xc, yc, Up) with Health with Shooter {
     var hp = 10
-    var shotType: Int = BulletID
+    var shotType: Int = PBulletID
     def id = playerID
     
+
+    val shotInterval = 5
     
     def move(dx: Int, dy: Int) {
         x = x + dx
