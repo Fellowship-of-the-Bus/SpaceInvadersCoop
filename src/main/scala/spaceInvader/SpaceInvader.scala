@@ -44,10 +44,10 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     val newy = player.y + yamt
 
     import SpaceInvader.{Width,Height}
-    if (newx + player.size/2 < Width && newx - player.size/2 > 0) {
+    if (newx + player.width/2 < Width && newx - player.width/2 > 0) {
       player.move(xamt, 0)
     }
-    if (newy + player.size/2 < Height && newy - player.size/2 > Height/4) {
+    if (newy + player.height/2 < Height && newy - player.height/2 > Height/4) {
       player.move(0, yamt)
     }
 
@@ -106,11 +106,14 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
             case _ => ()
           }
           sh.tick()
+        case _ => ()
       }
-      if (e.x + e.size/2 > Width || e.x - e.size/2 < 0) {
+      val (ex1, ey1) = e.topLeftCoord
+      val (ex2, _) = e.bottomRightCoord
+      if (ex2 > Width || ex1 < 0) {
         e.dx = -e.dx
       }
-      if (e.y - e.size/2 > Height) {
+      if (ey1 > Height) {
         e.inactivate
       }
     }
@@ -186,11 +189,11 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       g.drawImage(images(GameOverID), 0, 0)
     }
 
-    // g.drawString("Hi!", 100, 100)
     val scoreString = s"Score: $score"
-    g.drawString(scoreString, Width/2 - scoreString.length * 12, Height-20)
-    for (i <- 0 until player.getHp) 
+    g.drawString(scoreString, Width/2 - scoreString.length * 5, Height-20)
+    for (i <- 0 until player.getHp) {
       g.drawImage(images(HeartID), 20*i, Height-20)
+    }
   }
 }
 

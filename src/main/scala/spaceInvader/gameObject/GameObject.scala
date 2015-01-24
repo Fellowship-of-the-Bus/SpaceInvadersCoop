@@ -10,7 +10,8 @@ object GameObject {
 abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
     var x: Int = xc
     var y: Int = yc
-    val size: Int = 40
+    def width = 40
+    def height = 40
     
     def id: Int
 
@@ -19,8 +20,8 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
     def inactivate = isActive = false
     def move() = {}
 
-    def topLeftCoord() = (x-size/2, y-size/2)
-    def bottomRightCoord() = (x+size/2, y+size/2)
+    def topLeftCoord() = (x-width/2, y-height/2)
+    def bottomRightCoord() = (x+width/2, y+height/2)
 
     def collision(cand: GameObject) = if (active && cand.active) {
         val (x1, y1) = topLeftCoord

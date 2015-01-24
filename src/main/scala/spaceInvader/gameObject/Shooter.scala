@@ -4,7 +4,8 @@ import GameObject._
 trait Shooter {
     def x: Int
     def y: Int
-    def size: Int
+    def width: Int
+    def height: Int
     def dir: Char
     def shotType: Int
 
@@ -24,13 +25,13 @@ trait Shooter {
         if ( shotTimer == 0 ) {
             shotTimer = shotInterval
             if (dir == Up) { 
-                py -= (size + Projectile.size) / 2
+                py -= (height + Projectile.height) / 2
             } else if (dir == Down) { 
-                py += (size + Projectile.size) / 2 
+                py += (height + Projectile.height) / 2 
             } else if (dir == Left) { 
-                px -= (size + Projectile.size) / 2 
+                px -= (width + Projectile.width) / 2 
             } else if (dir == Right) { 
-                px += (size + Projectile.size) / 2 
+                px += (width + Projectile.width) / 2 
             }
 
            Some(Projectile(shotType, px, py, dir));

@@ -3,7 +3,8 @@ import IDMap._
 import GameObject._
 
 object Projectile {
-    val size = 10
+    val width = 10
+    val height = 10
 
     def apply(id: Int, x: Int, y: Int, dir: Char) = {
         id match{
@@ -15,7 +16,8 @@ object Projectile {
 }
 
 abstract class Projectile (x: Int, y: Int, val dmg: Int, dir: Char, vel: Int) extends VelObject(x,y,dir) {
-    override val size = Projectile.size
+    override val width = Projectile.width
+    override val height = Projectile.height
 
     def setVelocity(amt: Int) = {
         if (dir == Up) {
@@ -40,22 +42,22 @@ object Bullet {
     val vel = 3
 }
 
-class Bullet(x: Int, y: Int, dir: Char) extends Projectile(x, y, Bullet.dmg, dir, Bullet.vel) {
-    def id = BulletID
-}
-
 object Missile {
     val dmg: Int = 2
     val vel = 1
 }
 
-class Missile(x: Int, y: Int, dir: Char) extends Projectile(x, y, Missile.dmg, dir, Missile.vel) {
-    def id = MissileID
-}
-
 object PBullet {
     val dmg: Int = 1
     val vel = 6
+}
+
+class Bullet(x: Int, y: Int, dir: Char) extends Projectile(x, y, Bullet.dmg, dir, Bullet.vel) {
+    def id = BulletID
+}
+
+class Missile(x: Int, y: Int, dir: Char) extends Projectile(x, y, Missile.dmg, dir, Missile.vel) {
+    def id = MissileID
 }
 
 class PBullet(x: Int, y: Int, dir: Char) extends Projectile(x, y, PBullet.dmg, dir, PBullet.vel) {
