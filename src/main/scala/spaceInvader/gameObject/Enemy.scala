@@ -13,6 +13,7 @@ object Enemy {
           case FighterID => new Fighter(spawnx, spawny, Down)
           case SpaceTurtleID => new SpaceTurtle(spawnx, spawny, Down)
           case CosmicBeeID => new CosmicBee(spawnx, spawny, Down)
+          case GalacticDragonID => new GalacticDragon(spawnx, spawny, Down)
         }
     }
 }
@@ -73,6 +74,16 @@ object CosmicBee extends EnemyType {
     val difficulty = 1
 }
 
+object GalacticDragon extends EnemyType {
+    val shotType = BulletID
+    val maxHp = 10
+    val shotInterval = 60 * 2 + 30
+    val id = GalacticDragonID
+    val difficulty = 10
+    val numShot = 5
+    val shotDelay = 10
+}
+
 class Drone(x: Int, y: Int, dir: Char) extends Enemy(Drone, x, y, dir) with Shooter {
     dx =
       if (rand(2) % 2 == 0) {1}
@@ -105,4 +116,15 @@ class CosmicBee(x: Int, y: Int, dir: Char) extends Enemy(CosmicBee, x, y, dir) {
 
     override def width = 20
     override def height = 20
+}
+
+class GalacticDragon(x: Int, y: Int, dir: Char) extends Enemy(GalacticDragon, x, y, dir) with RapidShooter {
+    dx = 0
+    dy = rand(2)+1
+
+    def numShot = GalacticDragon.numShot
+    def shotDelay = GalacticDragon.shotDelay
+
+    override def width = 60
+    override def height = 40
 }

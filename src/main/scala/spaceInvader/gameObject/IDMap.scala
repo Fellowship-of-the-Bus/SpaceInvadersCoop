@@ -9,7 +9,8 @@ object IDMap{
     val FighterID = 11
     val CosmicBeeID = 12
     val SpaceTurtleID = 13
-    val EnemyEnd = 14
+    val GalacticDragonID = 14
+    val EnemyEnd = 15
 
     val BulletID: Int  = 101
     val MissileID: Int = 102
@@ -27,6 +28,7 @@ object IDMap{
         FighterID -> "img/Fighter.png",
         CosmicBeeID -> "img/CosmicBee.png",
         SpaceTurtleID -> "img/SpaceTurtle.png",
+        GalacticDragonID -> "img/GalacticDragon.png",
 
 
         BulletID -> "img/Bullet.png",

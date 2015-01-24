@@ -47,7 +47,7 @@ trait RapidShooter extends Shooter {
 
   var shotDelayTimer = shotDelay
   var numShotLeft = numShot
-  override tick() = {
+  override def tick() = {
     if (shotTimer > 0) {
       shotTimer -= 1
     }
@@ -56,12 +56,16 @@ trait RapidShooter extends Shooter {
     }
   }
 
-  override shoot = {
+  override def shoot = {
     if (shotTimer == 0) {
       shotDelayTimer = shotDelay
       numShotLeft = numShot
     }
+
     if( shotDelayTimer == 0 && numShotLeft > 0) {
+      var px: Int = x
+      var py: Int = y
+
       if (dir == Up) { 
         py -= (height + Projectile.height) / 2
       } else if (dir == Down) { 
