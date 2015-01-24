@@ -11,7 +11,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
   var enemyProjectiles: List[Projectile] = List()
-  var score = 0
+  var score = 100000
   // var powerUps: PowerUp = null
 
   override def init(gc: GameContainer) = {
@@ -152,7 +152,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 
       var curEP = enemyPower
       var startMod: Int = math.min(
-                        math.max(math.floor(math.log10(score)-5).asInstanceOf[Int], 0),
+                        math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),
                         2)
       var eTypeFrame = 2
       while (curEP > 0) {
