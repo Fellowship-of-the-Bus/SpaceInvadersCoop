@@ -69,7 +69,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
         if (p.collision(e)) {
           e.takeDmg(p.dmg)
           if (!e.active) {
-            score += e.difficulty
+            score += e.difficulty * 1000
           }
           p.inactivate
         }
@@ -187,7 +187,8 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     }
 
     // g.drawString("Hi!", 100, 100)
-    g.drawString(s"Score: $score", Width/2 - 50, Height-20)
+    val scoreString = s"Score: $score"
+    g.drawString(scoreString, Width/2 - scoreString.length * 12, Height-20)
     for (i <- 0 until player.getHp) 
       g.drawImage(images(HeartID), 20*i, Height-20)
   }
