@@ -2,6 +2,7 @@ package spaceInvader
 import java.util.logging.{Level, Logger}
 import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
 import gameObject.IDMap._
+import SpaceInvader.{Height,Width}
 
 class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   import gameObject._
@@ -186,9 +187,14 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     }
 
     // g.drawString("Hi!", 100, 100)
+<<<<<<< HEAD
     g.drawString(s"Score: $score", Width/2 - 50, Height-20)
     for (i <- 0 until 10) 
       g.drawImage(images(HeartID), Height-20, 20*i)
+=======
+    for (i <- 0 until player.getHp) 
+      g.drawImage(images(HeartID), 20*i, Height-20)
+>>>>>>> FETCH_HEAD
   }
 }
 
