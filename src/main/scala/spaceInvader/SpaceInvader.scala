@@ -135,8 +135,8 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 
       for (e <- enemies; if (e.active)) {
         if (player.collision(e)) {
-            player.takeDmg(e.getHp)
-            e.takeDmg(100)
+            player.takeDmg((e.getHp-1)/2+1)
+            e.takeDmg(e.getHp+1)
         }
       }
     }
