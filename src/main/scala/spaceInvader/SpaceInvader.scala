@@ -10,6 +10,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
   var enemyProjectiles: List[Projectile] = List()
+  var score = 0
   // var powerUps: PowerUp = null
 
   override def init(gc: GameContainer) = {
@@ -65,8 +66,11 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       // detect collision with enemies
       for (e <- enemies; if (e.active)) {
         if (p.collision(e)) {
-            e.takeDmg(p.dmg)
-            p.inactivate
+          e.takeDmg(p.dmg)
+          if (!e.active) {
+            score += e.difficulty
+          }
+          p.inactivate
         }
       }
     }
@@ -182,6 +186,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     }
 
     // g.drawString("Hi!", 100, 100)
+    g.drawString(s"Score: $score", Width/2 - 50, Height-20)
     for (i <- 0 until 10) 
       g.drawImage(images(HeartID), Height-20, 20*i)
   }
