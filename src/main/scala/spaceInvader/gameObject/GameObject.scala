@@ -18,5 +18,8 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
     def active = isActive
     def inactivate = isActive = false
     def move() = {}
+
+    def topLeftCoord() = (x-size/2, y-size/2)
+    def bottomRightCoord() = (x+size/2, y+size/2)
 }
     

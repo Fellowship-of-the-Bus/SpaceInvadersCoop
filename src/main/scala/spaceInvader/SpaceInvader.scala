@@ -16,15 +16,18 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     // images(player.id)
   }
 
+  /** removes inactive game objects */
   def cleanup() = {
     alliedProjectiles = alliedProjectiles.filter(_.active)
     enemyProjectiles = enemyProjectiles.filter(_.active)
     enemies = enemies.filter(_.active)
   }
 
+  /** moves all objects in the scene */
   def move(implicit input: Input) = {
     val moveAmt = 5
 
+    // move the player if the appropriate key is depressed
     val xamt =
       if (input.isKeyDown(Input.KEY_LEFT)) -moveAmt
       else if (input.isKeyDown(Input.KEY_RIGHT)) moveAmt
@@ -37,7 +40,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       else 0
     val newy = player.y + yamt
 
-    import SpaceInvader._
+    import SpaceInvader.{Width,Height}
     if (newx + player.size/2 < Width && newx - player.size/2 > 0) {
       player.move(xamt, 0)
     }
@@ -45,30 +48,30 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       player.move(0, yamt)
     }
 
+    // move all active allied projectiles and 
+    // detect collisions with enemies
     for (p <- alliedProjectiles; if (p.active)) {
+      val (px1, py1) = p.topLeftCoord
+      val (px2, py2) = p.bottomRightCoord
       p.move()
-      if (p.x - p.size/2 > Width || p.x + p.size/2 < 0) {
+      // detect leaving the game bounds
+      if (px1 > Width || px2 < 0) {
         p.inactivate
       }
-      if (p.y - p.size/2 > Height || p.y + p.size/2 < 0) {
+      if (py1 > Height || py2 < 0) {
         p.inactivate
       }
+      // detect collision with enemies
       for (e <- enemies; if (e.active)) {
-        var ex1 = e.x - e.size /2
-        var ex2 = e.x + e.size /2
-        var ey1 = e.y - e.size /2
-        var ey2 = e.y + e.size /2
-        var px1 = p.x - p.size /2
-        var px2 = p.x + p.size /2
-        var py1 = p.y - p.size /2
-        var py2 = p.y + p.size /2
+        val (ex1, ey1) = e.topLeftCoord
+        val (ex2, ey2) = e.bottomRightCoord
         
-        def valueInRange(v: Int, min: Int, max: Int) = {
+        def inRange(v: Int, min: Int, max: Int) = {
           (v >= min) && (v <= max)
         }
 
-        val xOver = valueInRange(ex1,px1,px2) || valueInRange(px1, ex1, ex2)
-        val yOver = valueInRange(ey1,py1,py2) || valueInRange(py1, ey1, ey2)
+        val xOver = inRange(ex1,px1,px2) || inRange(px1, ex1, ex2)
+        val yOver = inRange(ey1,py1,py2) || inRange(py1, ey1, ey2)
 
         if (xOver && yOver) {
             e.takeDmg(p.dmg)
@@ -77,6 +80,8 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       }
     }
 
+    // move all active enemies and deactivate if 
+    // they leave the bottom of the arena
     for (e <- enemies; if (e.active)) {
       e.move()
       // e.shoot()
@@ -106,9 +111,11 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     player.tick
 
     counter = counter + 1
+    // periodically remove inactive objects
     if (counter % 120 == 0) {
       cleanup
     }
+    // periodically spawn move enemies
     if (counter == threshhold) {
       def spawnEnemy() = for {
         i <- 0 until 10
@@ -126,19 +133,22 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   override def render(gc: GameContainer, g: Graphics) = {
     import IDMap._
 
-    g.setColor(Color.yellow)
-    // g.drawRect(player.x-player.size/2, player.y-player.size/2, player.size, player.size)
-    g.drawImage(images(player.id), player.x-player.size/2, player.y-player.size/2)
+    // draw player
+    val (px, py) = player.topLeftCoord
+    g.drawImage(images(player.id), px, py)
+
+    // draw everything else
+    def drawAll(objs: List[GameObject]*): Unit =
+      for {
+        xs <- objs
+        o <- xs
+        if (o.active)
+        (x,y) = o.topLeftCoord
+      } g.drawImage(images(o.id), x, y)
     
-    // for (p <- alliedProjectiles; if (p.active)) g.drawOval(p.x-p.size/2, p.y-p.size/2, p.size, p.size)
-    // for (e <- enemies; if (e.active)) g.fillRoundRect(e.x-e.size/2, e.y-e.size/2, e.size, e.size, 5)
-    // for (p <- enemyProjectiles; if (p.active)) g.fillOval(p.x-p.size/2, p.y-p.size/2, p.size, p.size)
+    drawAll(alliedProjectiles, enemies, enemyProjectiles)
 
-    for (p <- alliedProjectiles; if (p.active)) g.drawImage(images(p.id), p.x-p.size/2, p.y-p.size/2)
-    for (e <- enemies; if (e.active)) g.drawImage(images(e.id), e.x-e.size/2, e.y-e.size/2)
-    for (p <- enemyProjectiles; if (p.active)) g.drawImage(images(p.id), p.x-p.size/2, p.y-p.size/2)
-
-    g.drawString("Hi!", 100, 100)
+    // g.drawString("Hi!", 100, 100)
   }
 }
 
