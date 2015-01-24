@@ -1,6 +1,7 @@
 package spaceInvader
 import java.util.logging.{Level, Logger}
 import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
+import gameObject.IDMap._
 
 class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   import gameObject._
@@ -111,7 +112,8 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   }
 
   var counter = 0
-  var threshhold = 240
+  val spawnTimer = 120
+  var enemyPower = 5
   override def update(gc: GameContainer, delta: Int) = {
     implicit val input = gc.getInput
     
@@ -135,22 +137,19 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     }
 
     counter = counter + 1
-    // periodically remove inactive objects
-    if (counter % 120 == 0) {
-      cleanup
-    }
     // periodically spawn move enemies
-    if (counter == threshhold) {
-      def spawnEnemy() = for {
-        i <- 0 until 10
-      } enemies = Enemy() :: enemies
-      spawnEnemy()
-      if (threshhold % 60 == 0) {
-        spawnEnemy()
+    if (counter == spawnTimer) {
+      // periodically remove inactive objects
+      cleanup
+
+      var curEP = enemyPower
+      while (curEP > 0) {
+        val e = Enemy(rand(EnemyEnd-EnemyStart)+EnemyStart)
+        curEP -= e.difficulty
+        enemies = e :: enemies
       }
-      if (threshhold > 125) {
-        threshhold -= 5
-      }
+
+      enemyPower += 1
       counter = 0
     }
   }

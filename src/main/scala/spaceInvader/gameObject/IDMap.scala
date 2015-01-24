@@ -3,8 +3,11 @@ import spaceInvader.SpaceInvader._
 
 object IDMap{
     val playerID = 1
-    
-    val DroneID = 2
+
+    val EnemyStart = 10
+    val DroneID = 10
+    val FighterID = 11
+    val EnemyEnd = 12
 
     val BulletID: Int  = 101
     val MissileID: Int = 102
@@ -18,6 +21,7 @@ object IDMap{
         playerID -> "img/PlayerR.png",
 
         DroneID -> "img/Drone.png",
+        FighterID -> "img/Fighter.png",
 
 
         BulletID -> "img/Bullet.png",
