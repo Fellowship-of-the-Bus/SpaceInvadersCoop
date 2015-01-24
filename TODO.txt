@@ -9,6 +9,12 @@ Refine firing shots
 Add more enemy types
 
 Add power ups
+- Spawn based on score
+- Healing
+- Bomb
+- Weapons Upgrade
+
+Free Bomb based on score
 
 Add menu
 
