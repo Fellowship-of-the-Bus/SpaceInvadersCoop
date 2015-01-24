@@ -102,6 +102,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 
     for (e <- enemies; if (e.active)) {
       if (player.collision(e)) {
+          e.takeDmg(100)
           player.takeDmg(e.getHp)
           if (player.getHp <= 0) {
             player.inactivate
@@ -131,10 +132,13 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   }
   override def render(gc: GameContainer, g: Graphics) = {
     import IDMap._
-
+    
+    
     // draw player
-    val (px, py) = player.topLeftCoord
-    g.drawImage(images(player.id), px, py)
+    if (player.active) {
+      val (px, py) = player.topLeftCoord
+      g.drawImage(images(player.id), px, py)
+    }
 
     // draw everything else
     def drawAll(objs: List[GameObject]*): Unit =
