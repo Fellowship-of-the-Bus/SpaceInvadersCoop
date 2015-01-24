@@ -38,7 +38,7 @@ object IDMap{
     PBulletID -> "img/PBullet.png",
 
     PowerHPID -> "img/PowerHP.png",
-    PowerShotsID -> "img/PowerShots",
+    PowerShotsID -> "img/PowerShots.png",
 
     GameOverID -> "img/GameOver.png",
     HeartID -> "img/Heart.png"
