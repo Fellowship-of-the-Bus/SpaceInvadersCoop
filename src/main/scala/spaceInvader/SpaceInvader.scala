@@ -100,6 +100,15 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     }
     player.tick
 
+    for (e <- enemies; if (e.active)) {
+      if (player.collision(e)) {
+          player.takeDmg(e.getHp)
+          if (player.getHp <= 0) {
+            player.inactivate
+          }
+        }
+    }
+
     counter = counter + 1
     // periodically remove inactive objects
     if (counter % 120 == 0) {
