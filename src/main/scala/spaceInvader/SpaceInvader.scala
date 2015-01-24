@@ -151,8 +151,12 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       cleanup
 
       var curEP = enemyPower
+      var startMod: Int = math.min(
+                        math.max(math.floor(math.log10(score)-5).asInstanceOf[Int], 0),
+                        2)
+      var eTypeFrame = 2
       while (curEP > 0) {
-        val e = Enemy(rand(EnemyEnd-EnemyStart)+EnemyStart)
+        val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
         curEP -= e.difficulty
         enemies = e :: enemies
       }
