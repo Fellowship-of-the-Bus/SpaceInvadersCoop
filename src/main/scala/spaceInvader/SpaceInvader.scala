@@ -182,6 +182,8 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     }
 
     // g.drawString("Hi!", 100, 100)
+    for (i <- 0 until 10) 
+      g.drawImage(images(HeartID), Height-20, 20*i)
   }
 }
 

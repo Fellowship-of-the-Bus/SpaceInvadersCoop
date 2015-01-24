@@ -16,6 +16,7 @@ object IDMap{
     val Power1ID = 201
 
     val GameOverID = 1001
+    val HeartID = 1002
 
     val imageMap = Map(
         playerID -> "img/PlayerR.png",
@@ -30,7 +31,8 @@ object IDMap{
 
         // Power1ID -> "img/player.png"
 
-        GameOverID -> "img/GameOver.png"
+        GameOverID -> "img/GameOver.png",
+        HeartID -> "img/Heart.png"
     )
 
     lazy val images = imageMap.map { x =>
