@@ -8,7 +8,7 @@ class Player (xc: Int, yc: Int) extends GameObject (xc, yc, Up) with Health with
     def id = playerID
     
 
-    val shotInterval = 5
+    val shotInterval = 10
     
     def move(dx: Int, dy: Int) {
         x = x + dx

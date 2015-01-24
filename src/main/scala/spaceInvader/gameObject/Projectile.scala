@@ -37,7 +37,7 @@ abstract class Projectile (x: Int, y: Int, val dmg: Int, dir: Char, vel: Int) ex
 
 object Bullet {
     val dmg: Int = 1
-    val vel = 2
+    val vel = 3
 }
 
 class Bullet(x: Int, y: Int, dir: Char) extends Projectile(x, y, Bullet.dmg, dir, Bullet.vel) {
@@ -55,7 +55,7 @@ class Missile(x: Int, y: Int, dir: Char) extends Projectile(x, y, Missile.dmg, d
 
 object PBullet {
     val dmg: Int = 1
-    val vel = 2
+    val vel = 6
 }
 
 class PBullet(x: Int, y: Int, dir: Char) extends Projectile(x, y, PBullet.dmg, dir, PBullet.vel) {

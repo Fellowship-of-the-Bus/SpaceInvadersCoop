@@ -175,6 +175,13 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
     
     drawAll(alliedProjectiles, enemies, enemyProjectiles)
 
+    if (! player.active) {
+      import SpaceInvader.{Width,Height}
+      g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
+      g.fillRect(0, 0, Width, Height)
+      g.drawImage(images(GameOverID), 0, 0)
+    }
+
     // g.drawString("Hi!", 100, 100)
   }
 }
@@ -182,8 +189,8 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 object SpaceInvader extends App {
   def makeImg(loc: String) = new Image(loc)
 
-  val Width = 640
-  val Height = 480
+  val Width = 800
+  val Height = 600
   val FrameRate = 60
 
   try {
