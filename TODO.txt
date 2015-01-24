@@ -1,0 +1,20 @@
+Add Life representation
+
+Add score display
+
+Refine enemy spawning
+-prevent strong spawns early in the game
+-prevent spawning over power level 
+
+Refine firing shots
+-burst fire
+-shot types
+-projectile directions
+
+Add more enemy types
+
+Add power ups
+
+Add menu
+
+Add multiplayer
