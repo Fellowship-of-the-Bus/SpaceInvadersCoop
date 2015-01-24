@@ -21,5 +21,20 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
 
     def topLeftCoord() = (x-size/2, y-size/2)
     def bottomRightCoord() = (x+size/2, y+size/2)
+
+    def collision(cand: GameObject) = {
+        val (x1, y1) = topLeftCoord
+        val (x2, y2) = bottomRightCoord
+        val (cx1, cy1) = cand.topLeftCoord
+        val (cx2, cy2) = cand.bottomRightCoord
+        
+        def inRange(v: Int, min: Int, max: Int) = {
+          (v >= min) && (v <= max)
+        }
+
+        val xOver = inRange(cx1,x1,x2) || inRange(x1, cx1, cx2)
+        val yOver = inRange(cy1,y1,y2) || inRange(y1, cy1, cy2)
+
+        xOver && yOver
+    }
 }
-    

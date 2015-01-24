@@ -63,17 +63,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
       }
       // detect collision with enemies
       for (e <- enemies; if (e.active)) {
-        val (ex1, ey1) = e.topLeftCoord
-        val (ex2, ey2) = e.bottomRightCoord
-        
-        def inRange(v: Int, min: Int, max: Int) = {
-          (v >= min) && (v <= max)
-        }
-
-        val xOver = inRange(ex1,px1,px2) || inRange(px1, ex1, ex2)
-        val yOver = inRange(ey1,py1,py2) || inRange(py1, ey1, ey2)
-
-        if (xOver && yOver) {
+        if (p.collision(e)) {
             e.takeDmg(p.dmg)
             p.inactivate
         }
