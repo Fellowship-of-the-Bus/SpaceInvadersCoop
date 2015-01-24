@@ -41,3 +41,44 @@ trait Shooter {
     }
 }
 
+trait RapidShooter extends Shooter {
+  def numShot: Int
+  def shotDelay: Int
+
+  var shotDelayTimer = shotDelay
+  var numShotLeft = numShot
+  override tick() = {
+    if (shotTimer > 0) {
+      shotTimer -= 1
+    }
+    if (shotDelayTimer > 0) {
+      shotDelayTimer -= 1
+    }
+  }
+
+  override shoot = {
+    if (shotTimer == 0) {
+      shotDelayTimer = shotDelay
+      numShotLeft = numShot
+    }
+    if( shotDelayTimer == 0 && numShotLeft > 0) {
+      if (dir == Up) { 
+        py -= (height + Projectile.height) / 2
+      } else if (dir == Down) { 
+        py += (height + Projectile.height) / 2 
+      } else if (dir == Left) { 
+        px -= (width + Projectile.width) / 2 
+      } else if (dir == Right) { 
+        px += (width + Projectile.width) / 2 
+      }
+      numShotLeft -= 1
+      shotDelayTimer = shotDelay
+      Some(Projectile(shotType, px, py, dir));
+    } else {
+      None
+    }
+  }
+}
+
+
+
