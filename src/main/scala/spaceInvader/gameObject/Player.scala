@@ -9,7 +9,7 @@ class Player (xc: Int, yc: Int) extends GameObject (xc, yc, Up) with Health with
     
 
     val shotInterval = 20
-    val numShot = 1
+    var numShot = 1
     val shotDelay = 4
     
     def move(dx: Int, dy: Int) {

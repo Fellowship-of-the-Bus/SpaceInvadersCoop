@@ -9,6 +9,7 @@ class GameState {
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
   var enemyProjectiles: List[Projectile] = List()
+  var powerUps: List[PowerUp] = List()
   var score = 0
 
   /** removes inactive game objects */
@@ -16,6 +17,7 @@ class GameState {
     alliedProjectiles = alliedProjectiles.filter(_.active)
     enemyProjectiles = enemyProjectiles.filter(_.active)
     enemies = enemies.filter(_.active)
+    powerUps = powerUps.filter(_.active)
   }
 
   /** moves all objects in the scene */
@@ -86,6 +88,28 @@ class GameState {
       }
     }
 
+    for (p <- powerUps; if (p.active)) {
+      val (px1, py1) = p.topLeftCoord
+      val (px2, py2) = p.bottomRightCoord
+      p.move()
+      // detect leaving the game bounds
+      if (px1 > Width + p.width || px2 < -p.width) {
+        p.inactivate
+      }
+
+      // detect collision with player
+      if (p.collision(player)) {
+          p.id match {
+            case PowerHPID => 
+              player.setHp(math.min(10, player.getHp + 3))
+            case PowerShotsID => 
+              player.numShot += 1
+          }
+          p.inactivate
+      }
+    }
+
+
     // move all active enemies and deactivate if 
     // they leave the bottom of the arena
     for (e <- enemies; if (e.active)) {
@@ -141,7 +165,6 @@ class GameState {
     if (counter == spawnTimer) {
       // periodically remove inactive objects
       cleanup
-
       var curEP = enemyPower
       var startMod: Int = math.min(
                         math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),
@@ -152,6 +175,7 @@ class GameState {
         curEP -= e.difficulty
         enemies = e :: enemies
       }
+      powerUps = PowerUp() :: powerUps
 
       enemyPower += 1
       counter = 0

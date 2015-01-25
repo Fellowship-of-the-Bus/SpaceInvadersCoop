@@ -11,6 +11,5 @@ trait Health {
         }
     }
 
-    def getHp() = hp
-    def setHp(amt: Int) { hp = amt } 
+    def getHp() = hp 
 }
