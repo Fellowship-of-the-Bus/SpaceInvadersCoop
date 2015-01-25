@@ -202,7 +202,7 @@ class GameState extends Mode {
         (x,y) = o.topLeftCoord
       } g.drawImage(images(o.id), x, y)
     
-    drawAll(alliedProjectiles, enemies, enemyProjectiles)
+    drawAll(alliedProjectiles, enemies, enemyProjectiles, powerUps)
 
     if (! player.active) {
       import SpaceInvader.{Width,Height}
