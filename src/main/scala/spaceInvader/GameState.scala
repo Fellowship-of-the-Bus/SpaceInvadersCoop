@@ -181,6 +181,9 @@ class GameState extends Mode {
       enemyPower += 1
       counter = 0
     }
+
+    import Mode._
+    GameID
   }
 
 

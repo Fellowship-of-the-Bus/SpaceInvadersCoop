@@ -8,7 +8,7 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   import gameObject._
   import Mode._
 
-  var mode = Game
+  var mode = MenuID
 
   var game = new GameState()
 
@@ -19,14 +19,15 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
   override def update(gc: GameContainer, delta: Int) = {
     implicit val input = gc.getInput
 
-    mode match {
-      // case Menu => update(gc, delta)
-      case Game | GameOver => game.update(gc, delta) 
+    mode = mode match {
+      case MenuID => Menu.update(gc, delta)
+      case GameID | GameOverID => game.update(gc, delta) 
     }
   }
   override def render(gc: GameContainer, g: Graphics) = {
     mode match {
-      case Game | GameOver => game.render(gc, g)
+      case MenuID => Menu.render(gc, g)
+      case GameID | GameOverID => game.render(gc, g)
     }
   }
 }
