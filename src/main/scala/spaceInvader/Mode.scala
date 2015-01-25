@@ -1,4 +1,5 @@
 package spaceInvader
+import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image}
 
 object Mode {
   val Menu = 0
@@ -8,4 +9,7 @@ object Mode {
   val GameOver = 4
 }
 
-
+trait Mode {
+  def update(gc: GameContainer, delta: Int): Unit
+  def render(gc: GameContainer, g: Graphics): Unit
+}

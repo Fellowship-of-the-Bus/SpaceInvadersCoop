@@ -1,5 +1,6 @@
-package spaceInvader.gameObject
+package spaceInvader
 import spaceInvader.SpaceInvader._
+import org.newdawn.slick.{Input}
 
 object KeyMap{
 

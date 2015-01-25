@@ -2,10 +2,10 @@ package spaceInvader
 import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
 import SpaceInvader.{Height,Width}
 import gameObject.IDMap._
-import gameObject.KeyMap._
+import KeyMap._
 import gameObject._
 
-class GameState {
+class GameState extends Mode {
   val player = new Player(100, 400)
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
