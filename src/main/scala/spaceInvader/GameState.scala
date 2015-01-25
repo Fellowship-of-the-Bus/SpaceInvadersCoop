@@ -2,6 +2,7 @@ package spaceInvader
 import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
 import SpaceInvader.{Height,Width}
 import gameObject.IDMap._
+import gameObject.KeyMap._
 import gameObject._
 
 class GameState {
@@ -26,14 +27,14 @@ class GameState {
 
     // move the player if the appropriate key is depressed
     val xamt =
-      if (input.isKeyDown(Input.KEY_LEFT)) -moveAmt
-      else if (input.isKeyDown(Input.KEY_RIGHT)) moveAmt
+      if (input.isKeyDown( keyMap(Left))) -moveAmt
+      else if (input.isKeyDown(keyMap(Right))) moveAmt
       else 0
     val newx = player.x + xamt
 
     val yamt =
-      if (input.isKeyDown(Input.KEY_UP)) -moveAmt
-      else if (input.isKeyDown(Input.KEY_DOWN)) moveAmt
+      if (input.isKeyDown(keyMap(Up))) -moveAmt
+      else if (input.isKeyDown(keyMap(Down))) moveAmt
       else 0
     val newy = player.y + yamt
 
@@ -143,7 +144,7 @@ class GameState {
 
     move
     if (player.active) {
-      if (input.isKeyDown(Input.KEY_SPACE)) {
+      if (input.isKeyDown(keyMap(SpaceBar))) {
         val shot = player.shoot
         shot match {
           case Some(s) => alliedProjectiles = s :: alliedProjectiles
