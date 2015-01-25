@@ -11,10 +11,10 @@ object PowerUp {
     var dir: Char = 0
 
     if (rand(2) % 2 == 0) {
-        spawnx = -width
+        spawnx = Width / 2
         dir = Right
     } else {
-        spawnx = Width + width
+        spawnx = Width / 2 + (width / 2)
         dir = Left
     } 
     val spawny = rand(Height/4 * 3) + (Height / 4)
