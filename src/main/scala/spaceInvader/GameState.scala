@@ -94,7 +94,7 @@ class GameState extends Mode {
       val (px2, py2) = p.bottomRightCoord
       p.move()
       // detect leaving the game bounds
-      if (px1 > Width + p.width || px2 < -p.width) {
+      if (px1 > (Width + p.width) || (px2 < -p.width)) {
         p.inactivate
       }
 

@@ -11,10 +11,10 @@ object PowerUp {
     var dir: Char = 0
 
     if (rand(2) % 2 == 0) {
-        spawnx = Width / 2
+        spawnx = -(width / 2)
         dir = Right
     } else {
-        spawnx = Width / 2 + (width / 2)
+        spawnx = Width + (width / 2)
         dir = Left
     } 
     val spawny = rand(Height/4 * 3) + (Height / 4)
@@ -27,10 +27,10 @@ object PowerUp {
 class PowerUp (val id: Int, xc: Int, yc: Int, dir: Char) extends VelObject(xc, yc, dir) {
     override def width = 30
     override def height = 30
-    if (xc < 0) {
-        dx = 2
-    } else {
-        dx = -2
+
+    dir match {
+        case Left => dx = -2
+        case Right => dx = 2
     }
 }
 
