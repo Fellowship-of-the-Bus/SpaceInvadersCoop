@@ -14,6 +14,7 @@ class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
     addState(Menu)
     addState(SpaceInvader.game)
     addState(Options)
+    addState(KeyBindOption)
   }
 }
 

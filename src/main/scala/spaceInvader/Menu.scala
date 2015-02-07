@@ -179,7 +179,8 @@ object KeyBindOption extends BasicGameState {
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {
-    
+    implicit val input = gc.getInput
+    input.addKeyListener(Listener)
   }
 
   def getID() = Mode.OptionsID
