@@ -39,7 +39,7 @@ object SpaceInvader extends App {
   val Width = 800
   val Height = 600
   val FrameRate = 60
-  val game = new Game
+  val game = new GameState
 
   try {
     println("Library path is: " + System.getProperty("java.library.path"))
