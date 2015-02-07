@@ -11,7 +11,7 @@ object Menu extends BasicGameState {
   var time = 0
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     import Mode._
-    val input = gc.getInput
+    implicit val input = gc.getInput
 
     // if (input.isKeyDown(Input.KEY_P)) {
     //   SpaceInvader.game.reset()
@@ -19,17 +19,17 @@ object Menu extends BasicGameState {
     // }
     time += delta
     if (time > 250) {
-      if (input.isKeyDown(keyMap(Confirm))) {
+      if (KeyMap.isKeyDown(Confirm)) {
         choices(curChoice) match {
           case "Play Game" =>
             SpaceInvader.game.reset()
             game.enterState(Mode.GameID)
           case "Quit" => System.exit(0)
         }
-      } else if (input.isKeyDown(keyMap(Up))) {
+      } else if (KeyMap.isKeyDown(Up)) {
         curChoice = (curChoice-1+choices.length) % choices.length
         time = 0
-      } else if (input.isKeyDown(keyMap(Down))) {
+      } else if (KeyMap.isKeyDown(Down)) {
         curChoice = (curChoice+1) % choices.length
         time = 0
       }
