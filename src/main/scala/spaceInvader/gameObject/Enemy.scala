@@ -87,6 +87,16 @@ object GalacticDragon extends EnemyType {
     override val shotDelay = 10
 }
 
+object CyberSalmon extends EnemyType {
+  val id = CyberSalmonID
+  val maxHp = 50
+  val difficulty = 100
+  override val shotType = BulletID
+  override val shotInterval = 60 * 5
+  override val numShot = 3
+  override val shotDelay = 10
+}
+
 class Drone(x: Int, y: Int, dir: Char) extends Enemy(Drone, x, y, dir) with Shooter {
     dx =
       if (rand(2) % 2 == 0) {1}
@@ -127,4 +137,12 @@ class GalacticDragon(x: Int, y: Int, dir: Char) extends Enemy(GalacticDragon, x,
 
     override def width = 60
     override def height = 40
+}
+
+class CyberSalmon() extends Enemy(CyberSalmon, SpaceInvader.Width/2, 85/2, Down) with Shooter {
+  dx = 0
+  dy = 0
+
+  override def width = 200
+  override def height = 85
 }

@@ -15,21 +15,6 @@ class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
     addState(SpaceInvader.game)
     addState(Options)
   }
-
-  // override def update(gc: GameContainer, delta: Int) = {
-  //   implicit val input = gc.getInput
-
-  //   mode = mode match {
-  //     case MenuID => Menu.update(gc, delta)
-  //     case GameID | GameOverID => game.update(gc, delta) 
-  //   }
-  // }
-  // override def render(gc: GameContainer, g: Graphics) = {
-  //   mode match {
-  //     case MenuID => Menu.render(gc, g)
-  //     case GameID | GameOverID => game.render(gc, g)
-  //   }
-  // }
 }
 
 object SpaceInvader extends App {

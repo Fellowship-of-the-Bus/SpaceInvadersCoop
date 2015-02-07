@@ -15,11 +15,6 @@ object Menu extends BasicGameState {
     import Mode._
     implicit val input = gc.getInput
 
-    // if (input.isKeyDown(Input.KEY_P)) {
-    //   SpaceInvader.game.reset()
-    //   game.enterState(Mode.GameID)
-    // }
-
     MenuTimer.time += delta
     if (MenuTimer.time > 250) {
       if (KeyMap.isKeyDown(Confirm)) {
