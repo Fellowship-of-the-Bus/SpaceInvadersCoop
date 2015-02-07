@@ -12,6 +12,8 @@ object IDMap{
   val GalacticDragonID = 15
   val EnemyEnd = 16
 
+  val CyberSalmonID = 51
+
   val BulletID: Int  = 101
   val MissileID: Int = 102
   val PBulletID = 151
