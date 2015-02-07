@@ -13,6 +13,7 @@ class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
     gc.setShowFPS(true)
     addState(Menu)
     addState(SpaceInvader.game)
+    addState(Options)
   }
 
   // override def update(gc: GameContainer, delta: Int) = {
