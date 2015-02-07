@@ -1,21 +1,18 @@
+Add menu
+
 Refine enemy spawning
 -prevent strong spawns early in the game
 
 Refine firing shots
--burst fire
 -shot types
--projectile directions
 
 Add more enemy types
 
-Add power ups
+More power ups?
 - Spawn based on score
-- Healing
 - Bomb
 - Weapons Upgrade
 
 Free Bomb based on score
-
-Add menu
 
 Add multiplayer
