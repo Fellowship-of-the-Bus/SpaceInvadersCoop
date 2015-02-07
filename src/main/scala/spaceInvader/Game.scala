@@ -150,9 +150,10 @@ class Game {
     if (player.active) {
       if (input.isKeyDown(keyMap(SpaceBar))) {
         val shot = player.shoot
-        numShot += 1
         shot match {
-          case Some(s) => alliedProjectiles = s :: alliedProjectiles
+          case Some(s) => 
+            alliedProjectiles = s :: alliedProjectiles
+            numShot += 1
           case _ => ()
         }
       }
