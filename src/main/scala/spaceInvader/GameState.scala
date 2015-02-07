@@ -1,11 +1,13 @@
 package spaceInvader
-import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
+import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
+import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
+
 import SpaceInvader.{Height,Width}
 import gameObject.IDMap._
 import KeyMap._
 import gameObject._
 
-class GameState extends Mode {
+class GameState {
   val player = new Player(100, 400)
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
@@ -136,10 +138,10 @@ class GameState extends Mode {
     }
   }
 
-  var counter = 0
-  val spawnTimer = 120
-  var enemyPower = 5
-  def update(gc: GameContainer, delta: Int) = {
+  private var counter = 0
+  private val spawnTimer = 120
+  private var enemyPower = 5
+  def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     implicit val input = gc.getInput
 
     move
@@ -180,44 +182,6 @@ class GameState extends Mode {
 
       enemyPower += 1
       counter = 0
-    }
-
-    import Mode._
-    GameID
-  }
-
-
-  def render(gc: GameContainer, g: Graphics) = {
-    import IDMap._
-    
-    // draw player
-    if (player.active) {
-      val (px, py) = player.topLeftCoord
-      g.drawImage(images(player.id), px, py)
-    }
-
-    // draw everything else
-    def drawAll(objs: List[GameObject]*): Unit =
-      for {
-        xs <- objs
-        o <- xs
-        if (o.active)
-        (x,y) = o.topLeftCoord
-      } g.drawImage(images(o.id), x, y)
-    
-    drawAll(alliedProjectiles, enemies, enemyProjectiles, powerUps)
-
-    if (! player.active) {
-      import SpaceInvader.{Width,Height}
-      g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
-      g.fillRect(0, 0, Width, Height)
-      g.drawImage(images(GameOverID), 0, 0)
-    }
-
-    val scoreString = s"Score: $score"
-    g.drawString(scoreString, Width/2 - scoreString.length * 5, Height-20)
-    for (i <- 0 until player.getHp) {
-      g.drawImage(images(HeartID), 20*i, Height-20)
     }
   }
 }

@@ -1,10 +1,11 @@
 package spaceInvader
 import java.util.logging.{Level, Logger}
-import org.newdawn.slick.{AppGameContainer, BasicGame, GameContainer, Graphics, SlickException,Color, Input, Image}
+import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
+import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import gameObject.IDMap._
 import SpaceInvader.{Height,Width}
 
-class SpaceInvader(gamename: String) extends BasicGame(gamename) {
+class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
   import gameObject._
   import Mode._
 
@@ -12,24 +13,25 @@ class SpaceInvader(gamename: String) extends BasicGame(gamename) {
 
   var game = new GameState()
 
-  override def init(gc: GameContainer) = {
+  def initStatesList(gc: GameContainer) = {
     gc.setShowFPS(true)
+    addState(Menu)
   }
 
-  override def update(gc: GameContainer, delta: Int) = {
-    implicit val input = gc.getInput
+  // override def update(gc: GameContainer, delta: Int) = {
+  //   implicit val input = gc.getInput
 
-    mode = mode match {
-      case MenuID => Menu.update(gc, delta)
-      case GameID | GameOverID => game.update(gc, delta) 
-    }
-  }
-  override def render(gc: GameContainer, g: Graphics) = {
-    mode match {
-      case MenuID => Menu.render(gc, g)
-      case GameID | GameOverID => game.render(gc, g)
-    }
-  }
+  //   mode = mode match {
+  //     case MenuID => Menu.update(gc, delta)
+  //     case GameID | GameOverID => game.update(gc, delta) 
+  //   }
+  // }
+  // override def render(gc: GameContainer, g: Graphics) = {
+  //   mode match {
+  //     case MenuID => Menu.render(gc, g)
+  //     case GameID | GameOverID => game.render(gc, g)
+  //   }
+  // }
 }
 
 object SpaceInvader extends App {
