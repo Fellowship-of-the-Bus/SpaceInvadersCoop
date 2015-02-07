@@ -34,7 +34,7 @@ class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
 object SpaceInvader extends App {
   def makeImg(loc: String) = new Image(loc)
   def drawCentred(s: String, h: Int, g: Graphics) = {
-    g.drawString(s, Width/2 - s.length()*5, h)
+    g.drawString(s, Width/2 - s.length()*4, h)
   }
   val Width = 800
   val Height = 600
