@@ -15,6 +15,10 @@ class GameState extends BasicGameState {
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     implicit val input = gc.getInput
     gameState.update(gc, game, delta)
+    if(gameState.endTimer > 2500 && KeyMap.isKeyDown(Confirm)) {
+        MenuTimer.time = 0
+        game.enterState(Mode.MenuID)
+    }
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
@@ -59,6 +63,7 @@ class GameState extends BasicGameState {
       g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
       g.fillRect(0, 0, Width, Height)
       g.drawImage(images(GameOverID), 0, 0)
+
       // g.pushTransform
       // g.scale(2,2)
       SpaceInvader.drawCentred(accString, Height/2,g)

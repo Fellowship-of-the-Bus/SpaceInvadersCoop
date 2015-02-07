@@ -191,13 +191,18 @@ class Game {
 
     if (! player.active && isActive) {
       gameOver()
+    } else if (isGameOver) {
+      endTimer += delta
     }
   }
 
+  var endTimer: Int = 0
   var finalScore = 0.0
   var isGameOver = false
   def gameOver() = {
+    endTimer = 0
     finalScore = score * (1+1.0*numHit/numShot)
     isGameOver = true
+
   }
 }
