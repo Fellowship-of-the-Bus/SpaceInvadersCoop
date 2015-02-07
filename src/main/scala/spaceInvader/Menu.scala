@@ -8,9 +8,8 @@ object Menu extends BasicGameState {
     val input = gc.getInput
 
     if (input.isKeyDown(Input.KEY_P)) {
-      val g = new Game
-      game.addState(g)
-      game.enterState(g.getID)
+      SpaceInvader.game.reset()
+      game.enterState(Mode.GameID)
     }
   }
 

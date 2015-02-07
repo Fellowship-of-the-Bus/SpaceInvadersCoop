@@ -8,14 +8,11 @@ import SpaceInvader.{Height,Width}
 class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
   import gameObject._
   import Mode._
-
-  var mode = MenuID
-
-  var game = new GameState()
-
+    
   def initStatesList(gc: GameContainer) = {
     gc.setShowFPS(true)
     addState(Menu)
+    addState(SpaceInvader.game)
   }
 
   // override def update(gc: GameContainer, delta: Int) = {
@@ -40,6 +37,7 @@ object SpaceInvader extends App {
   val Width = 800
   val Height = 600
   val FrameRate = 60
+  val game = new Game
 
   try {
     println("Library path is: " + System.getProperty("java.library.path"))
