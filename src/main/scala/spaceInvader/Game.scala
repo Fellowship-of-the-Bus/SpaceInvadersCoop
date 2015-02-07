@@ -52,7 +52,7 @@ class Game extends BasicGameState {
     }
 
     val scoreString = s"Score: $score"
-    g.drawString(scoreString, Width/2 - scoreString.length * 5, Height-20)
+    drawCentred(scoreString, Height-20, g)
     for (i <- 0 until player.getHp) {
       g.drawImage(images(HeartID), 20*i, Height-20)
     }
