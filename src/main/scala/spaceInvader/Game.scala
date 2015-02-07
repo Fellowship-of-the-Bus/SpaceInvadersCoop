@@ -30,14 +30,14 @@ class Game {
 
     // move the player if the appropriate key is depressed
     val xamt =
-      if (input.isKeyDown( keyMap(Left))) -moveAmt
-      else if (input.isKeyDown(keyMap(Right))) moveAmt
+      if (KeyMap.isKeyDown(Left)) -moveAmt
+      else if (KeyMap.isKeyDown(Right)) moveAmt
       else 0
     val newx = player.x + xamt
 
     val yamt =
-      if (input.isKeyDown(keyMap(Up))) -moveAmt
-      else if (input.isKeyDown(keyMap(Down))) moveAmt
+      if (KeyMap.isKeyDown(Up)) -moveAmt
+      else if (KeyMap.isKeyDown(Down)) moveAmt
       else 0
     val newy = player.y + yamt
 
@@ -149,7 +149,7 @@ class Game {
     val isActive = player.active
     move
     if (player.active) {
-      if (input.isKeyDown(keyMap(SpaceBar))) {
+      if (KeyMap.isKeyDown(SpaceBar)) {
         val shot = player.shoot
         shot match {
           case Some(s) => 
