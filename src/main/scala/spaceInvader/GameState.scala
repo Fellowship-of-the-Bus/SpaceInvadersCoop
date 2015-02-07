@@ -54,6 +54,8 @@ class GameState extends BasicGameState {
     val acc = String.format("%1$,.2f", myDouble)
     val accString = s"$numHit / $numShot ... $acc "
     val scoreString = s"Score: $score"
+    val total = gameState.finalScore.asInstanceOf[Int]
+    val totalString = s"Total: ${total}"
     for (i <- 0 until player.getHp) {
       g.drawImage(images(HeartID), 20*i, Height-20)
     }
@@ -66,8 +68,10 @@ class GameState extends BasicGameState {
 
       // g.pushTransform
       // g.scale(2,2)
+      g.setColor(Color.white)
       SpaceInvader.drawCentred(accString, Height/2,g)
       SpaceInvader.drawCentred(scoreString, Height/2+20, g)
+      SpaceInvader.drawCentred(totalString, Height/2+40, g)
       // g.popTransform
     } else {
       SpaceInvader.drawCentred(accString, Height-40,g)
