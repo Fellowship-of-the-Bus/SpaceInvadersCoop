@@ -146,6 +146,7 @@ object KeyBindOption extends BasicGameState {
       } else if (KeyMap.isKeyDown(Confirm) && curChoice == choices.length-1) {
         game.enterState(Mode.OptionsID)
         MenuTimer.time = 0
+        curChoice = 0
       } else if (curChoice == choices.length-1) {
             
       } else {
@@ -183,5 +184,5 @@ object KeyBindOption extends BasicGameState {
     input.addKeyListener(Listener)
   }
 
-  def getID() = Mode.OptionsID
+  def getID() = Mode.KeyBindOptionID
 }
