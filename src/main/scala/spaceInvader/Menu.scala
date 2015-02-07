@@ -1,18 +1,27 @@
 package spaceInvader
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image}
+import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-object Menu extends Mode {
-  def update(gc: GameContainer, delta: Int) = {
+object Menu extends BasicGameState {
+  def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     import Mode._
     val input = gc.getInput
 
     if (input.isKeyDown(Input.KEY_P)) {
-      GameID
-    } else MenuID
+      val g = new Game
+      game.addState(g)
+      game.enterState(g.getID)
+    }
   }
 
-  def render(gc: GameContainer, g: Graphics) = {
+  def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     g.drawString("Space Invader", 0, 0)
     g.drawString("Press 'P' to play!", 0, 100)
   }
+
+  def init(gc: GameContainer, game: StateBasedGame) = {
+    
+  }
+
+  def getID() = Mode.MenuID
 }
