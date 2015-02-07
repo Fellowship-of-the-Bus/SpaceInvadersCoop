@@ -14,7 +14,8 @@ class Game {
   var enemyProjectiles: List[Projectile] = List()
   var powerUps: List[PowerUp] = List()
   var score = 0
-
+  var numHit = 0
+  var numShot = 0
   /** removes inactive game objects */
   def cleanup() = {
     alliedProjectiles = alliedProjectiles.filter(_.active)
@@ -69,6 +70,7 @@ class Game {
             score += e.difficulty * 1000
           }
           p.inactivate
+          numHit += 1
         }
       }
     }
@@ -148,6 +150,7 @@ class Game {
     if (player.active) {
       if (input.isKeyDown(keyMap(SpaceBar))) {
         val shot = player.shoot
+        numShot += 1
         shot match {
           case Some(s) => alliedProjectiles = s :: alliedProjectiles
           case _ => ()

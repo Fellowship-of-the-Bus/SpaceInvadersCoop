@@ -26,7 +26,8 @@ class GameState extends BasicGameState {
     val enemyProjectiles = gameState.enemyProjectiles
     val powerUps = gameState.powerUps
     val score = gameState.score
-
+    val numHit = gameState.numHit
+    val numShot = gameState.numShot
     // draw player
     if (player.active) {
       val (px, py) = player.topLeftCoord
@@ -50,7 +51,11 @@ class GameState extends BasicGameState {
       g.fillRect(0, 0, Width, Height)
       g.drawImage(images(GameOverID), 0, 0)
     }
-
+    
+    var myDouble: java.lang.Double = 100.0*numHit/numShot
+    val acc = String.format("%1$,.2f", myDouble)
+    val accString = s"$numHit / $numShot ... $acc "
+    SpaceInvader.drawCentred(accString, Height-40,g)
     val scoreString = s"Score: $score"
     SpaceInvader.drawCentred(scoreString, Height-20, g)
     for (i <- 0 until player.getHp) {
