@@ -6,4 +6,5 @@ object Mode {
   val PauseID = 2
   val OptionsID = 3
   val GameOverID = 4
+  val KeyBindOptionID = 5
 }

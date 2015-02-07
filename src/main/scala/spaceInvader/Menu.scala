@@ -121,6 +121,11 @@ object Listener extends KeyListener {
   def keyPressed(k: Int, c: Char) = {
     curKey = k
   }
+  def inputEnded(): Unit = {}
+  def inputStarted(): Unit = {}
+  def isAcceptingInput(): Boolean = true
+  def setInput(input: org.newdawn.slick.Input): Unit = {}
+  def keyReleased(k: Int,c: Char): Unit = {}
 }
 
 object KeyBindOption extends BasicGameState {
@@ -131,7 +136,7 @@ object KeyBindOption extends BasicGameState {
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     import Mode._
-    val input = gc.getInput
+    implicit val input = gc.getInput
 
     MenuTimer.time += delta
     if (MenuTimer.time > 250) {
@@ -139,12 +144,12 @@ object KeyBindOption extends BasicGameState {
         curChoice = (curChoice + 1) % choices.length
         MenuTimer.time = 0
       } else if (KeyMap.isKeyDown(Confirm) && curChoice == choices.length-1) {
-        game.enterState(Mode.OptionID)
+        game.enterState(Mode.OptionsID)
         MenuTimer.time = 0
       } else if (curChoice == choices.length-1) {
             
       } else {
-        if (Input.isKeyDown(Listener.curKey)) {
+        if (input.isKeyDown(Listener.curKey)) {
           KeyMap.setKeyBind(curChoice, Listener.curKey)
           MenuTimer.time = 0
         }
