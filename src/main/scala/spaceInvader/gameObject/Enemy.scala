@@ -139,7 +139,7 @@ class GalacticDragon(x: Int, y: Int, dir: Char) extends Enemy(GalacticDragon, x,
     override def height = 40
 }
 
-class CyberSalmon() extends extends Enemy(CyberSalmon, SpaceInvader.Width/2, 85/2, Down) with Shooter {
+class CyberSalmon() extends Enemy(CyberSalmon, SpaceInvader.Width/2, 85/2, Down) with Shooter {
   dx = 0
   dy = 0
 
