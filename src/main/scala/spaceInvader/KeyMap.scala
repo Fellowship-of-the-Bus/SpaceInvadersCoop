@@ -24,5 +24,11 @@ object KeyMap{
   def reset = {
     keyMap = default
   }
+  def isKeyDown(k: Int) (implicit input: Input) = {
+    input.isKeyDown(keyMap(k))
+  }
+  def setKeyBind(key:Int,newKey: Int) (implicit input:Input) = {
+    keyMap = keyMap + (key -> newKey)
+  }
 
 }
