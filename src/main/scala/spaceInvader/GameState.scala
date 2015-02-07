@@ -45,22 +45,29 @@ class GameState extends BasicGameState {
     
     drawAll(alliedProjectiles, enemies, enemyProjectiles, powerUps)
 
-    if (! player.active) {
+    var myDouble: java.lang.Double = 100.0*numHit/numShot
+    val acc = String.format("%1$,.2f", myDouble)
+    val accString = s"$numHit / $numShot ... $acc "
+    val scoreString = s"Score: $score"
+    for (i <- 0 until player.getHp) {
+      g.drawImage(images(HeartID), 20*i, Height-20)
+    }
+
+    if (gameState.isGameOver) {
       import SpaceInvader.{Width,Height}
       g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
       g.fillRect(0, 0, Width, Height)
       g.drawImage(images(GameOverID), 0, 0)
+      // g.pushTransform
+      // g.scale(2,2)
+      SpaceInvader.drawCentred(accString, Height/2,g)
+      SpaceInvader.drawCentred(scoreString, Height/2+20, g)
+      // g.popTransform
+    } else {
+      SpaceInvader.drawCentred(accString, Height-40,g)
+      SpaceInvader.drawCentred(scoreString, Height-20, g)
     }
-    
-    var myDouble: java.lang.Double = 100.0*numHit/numShot
-    val acc = String.format("%1$,.2f", myDouble)
-    val accString = s"$numHit / $numShot ... $acc "
-    SpaceInvader.drawCentred(accString, Height-40,g)
-    val scoreString = s"Score: $score"
-    SpaceInvader.drawCentred(scoreString, Height-20, g)
-    for (i <- 0 until player.getHp) {
-      g.drawImage(images(HeartID), 20*i, Height-20)
-    }
+
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {

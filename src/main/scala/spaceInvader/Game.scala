@@ -146,6 +146,7 @@ class Game {
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     implicit val input = gc.getInput
 
+    val isActive = player.active
     move
     if (player.active) {
       if (input.isKeyDown(keyMap(SpaceBar))) {
@@ -187,5 +188,16 @@ class Game {
       enemyPower += 1
       counter = 0
     }
+
+    if (! player.active && isActive) {
+      gameOver()
+    }
+  }
+
+  var finalScore = 0.0
+  var isGameOver = false
+  def gameOver() = {
+    finalScore = score * (1+1.0*numHit/numShot)
+    isGameOver = true
   }
 }
