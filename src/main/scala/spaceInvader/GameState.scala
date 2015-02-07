@@ -29,6 +29,7 @@ class GameState extends BasicGameState {
     val numHit = gameState.numHit
     val numShot = gameState.numShot
     // draw player
+    g.drawImage(images(TopBorderID), 0, 0)
     if (player.active) {
       val (px, py) = player.topLeftCoord
       g.drawImage(images(player.id), px, py)
