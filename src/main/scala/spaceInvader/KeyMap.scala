@@ -1,3 +1,4 @@
+package com.github.fellowship_of_the_bus
 package spaceInvader
 import spaceInvader.SpaceInvader._
 import org.newdawn.slick.{Input}

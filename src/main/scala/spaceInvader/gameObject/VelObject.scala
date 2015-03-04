@@ -1,3 +1,4 @@
+package com.github.fellowship_of_the_bus
 package spaceInvader.gameObject
 
 abstract class VelObject (xc: Int, yc: Int, dir: Char)  extends GameObject (xc, yc, dir) {

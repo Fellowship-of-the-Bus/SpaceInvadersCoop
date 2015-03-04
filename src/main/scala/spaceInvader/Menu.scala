@@ -1,3 +1,4 @@
+package com.github.fellowship_of_the_bus
 package spaceInvader
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}

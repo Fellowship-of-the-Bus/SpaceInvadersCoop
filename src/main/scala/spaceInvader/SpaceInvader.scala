@@ -1,9 +1,12 @@
+package com.github.fellowship_of_the_bus
 package spaceInvader
 import java.util.logging.{Level, Logger}
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import gameObject.IDMap._
 import SpaceInvader.{Height,Width}
+
+import lib.util.Native
 
 class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
   import gameObject._
@@ -29,7 +32,7 @@ object SpaceInvader extends App {
   val game = new GameState
 
   try {
-    println("Library path is: " + System.getProperty("java.library.path"))
+    Native.loadLibraryFromJar()
     val appgc = new AppGameContainer(new SpaceInvader("Simple Slick Game"))
     appgc.setDisplayMode(Width, Height, false)
     appgc.setTargetFrameRate(FrameRate)
@@ -37,6 +40,8 @@ object SpaceInvader extends App {
     appgc.start()
   } catch {
     case ex: SlickException => Logger.getLogger(SpaceInvader.getClass.getName()).log(Level.SEVERE, null, ex)
-    case _: Throwable => println("Library path is: " + System.getProperty("java.library.path"))
+    case t: Throwable => 
+      println("Library path is: " + System.getProperty("java.library.path"))
+      t.printStackTrace
   }
 }
