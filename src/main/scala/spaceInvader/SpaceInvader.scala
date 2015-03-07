@@ -33,7 +33,7 @@ object SpaceInvader extends App {
 
   try {
     Native.loadLibraryFromJar()
-    val appgc = new AppGameContainer(new SpaceInvader("Simple Slick Game"))
+    val appgc = new AppGameContainer(new SpaceInvader("Space Invaders Coop"))
     appgc.setDisplayMode(Width, Height, false)
     appgc.setTargetFrameRate(FrameRate)
     appgc.setVSync(true)
