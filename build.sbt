@@ -13,11 +13,7 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1"
 
 libraryDependencies += "junit" % "junit" % "4.10" % "test"
 
-libraryDependencies += "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "0.1-SNAPSHOT"
-
-// libraryDependencies +=
-//   "org.lwjgl.lwjgl" % "lwjgl-platform" % "2.8.4" classifier "natives-windows" classifier 
-//   "natives-linux" classifier "natives-osx"
+libraryDependencies += "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "latest.integration"
 
 scalacOptions ++= Seq("-deprecation", "-feature", "-optimize", "-Yinline-warnings")
 
@@ -38,5 +34,4 @@ val separator = System.getProperty("os.name").split(" ")(0).toLowerCase match {
 }
 
 javaOptions += "-Djava.library.path=" + System.getProperty("java.library.path") + 
-  separator + "./src/main/resources/natives/" + os
-  // separator + "/Users/Rob/bin/fellowship-of-the-bus/natives" +
+  separator + "./src/main/resources/native/" + os
