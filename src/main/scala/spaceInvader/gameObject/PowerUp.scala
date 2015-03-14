@@ -5,6 +5,8 @@ import spaceInvader.SpaceInvader._
 import GameObject._
 import IDMap._
 
+import lib.game.GameConfig.{Width,Height}
+
 object PowerUp {
   def apply () = {
     var spawnx: Int = 0 

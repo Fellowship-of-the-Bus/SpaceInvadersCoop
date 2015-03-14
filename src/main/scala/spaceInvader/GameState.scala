@@ -3,7 +3,8 @@ package spaceInvader
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-import SpaceInvader.{Height,Width}
+import lib.game.GameConfig.{Height,Width}
+import lib.ui.drawCentred
 import gameObject.IDMap._
 import KeyMap._
 import gameObject._
@@ -62,21 +63,17 @@ class GameState extends BasicGameState {
     }
 
     if (gameState.isGameOver) {
-      import SpaceInvader.{Width,Height}
       g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
       g.fillRect(0, 0, Width, Height)
       g.drawImage(images(GameOverID), 0, 0)
 
-      // g.pushTransform
-      // g.scale(2,2)
       g.setColor(Color.white)
-      SpaceInvader.drawCentred(accString, Height/2,g)
-      SpaceInvader.drawCentred(scoreString, Height/2+20, g)
-      SpaceInvader.drawCentred(totalString, Height/2+40, g)
-      // g.popTransform
+      drawCentred(accString, Height/2,g)
+      drawCentred(scoreString, Height/2+20, g)
+      drawCentred(totalString, Height/2+40, g)
     } else {
-      SpaceInvader.drawCentred(accString, Height-40,g)
-      SpaceInvader.drawCentred(scoreString, Height-20, g)
+      drawCentred(accString, Height-40,g)
+      drawCentred(scoreString, Height-20, g)
     }
 
   }

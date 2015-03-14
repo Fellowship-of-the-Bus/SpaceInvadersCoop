@@ -3,7 +3,7 @@ package spaceInvader
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-import SpaceInvader.{Height,Width}
+import lib.game.GameConfig.{Height,Width}
 import gameObject.IDMap._
 import KeyMap._
 import gameObject._
@@ -42,7 +42,6 @@ class Game {
       else 0
     val newy = player.y + yamt
 
-    import SpaceInvader.{Width,Height}
     if (newx + player.width/2 < Width && newx - player.width/2 > 0) {
       player.move(xamt, 0)
     }

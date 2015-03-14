@@ -2,6 +2,9 @@ package com.github.fellowship_of_the_bus
 package spaceInvader
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
+
+import lib.ui.drawCentred
+
 object MenuTimer {
 	var time: Int = 0
 }
@@ -39,7 +42,7 @@ object Menu extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import SpaceInvader.{Width, Height}
+    import lib.game.GameConfig.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
     var counter = 0
@@ -48,7 +51,7 @@ object Menu extends BasicGameState {
         g.setColor(new Color(255, 0, 0))
       }
 
-      SpaceInvader.drawCentred(item, 200+counter*30,g)
+      drawCentred(item, 200+counter*30,g)
       counter += 1
 
       g.setColor(Color.white)
@@ -94,7 +97,7 @@ object Options extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import SpaceInvader.{Width, Height}
+    import lib.game.GameConfig.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
     var counter = 0
@@ -103,7 +106,7 @@ object Options extends BasicGameState {
         g.setColor(new Color(255, 0, 0))
       }
 
-      SpaceInvader.drawCentred(item, 200+counter*30,g)
+      drawCentred(item, 200+counter*30,g)
       counter += 1
 
       g.setColor(Color.white)
@@ -160,19 +163,19 @@ object KeyBindOption extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import SpaceInvader.{Width, Height}
+    import lib.game.GameConfig.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
     var counter = 0
-    SpaceInvader.drawCentred("Press Tab to select next option", 200, g)
+    drawCentred("Press Tab to select next option", 200, g)
     for ( item <- choices ) {
       if (counter == curChoice) {
         g.setColor(new Color(255, 0, 0))
       }
       if (counter != choices.length-1) {
-        SpaceInvader.drawCentred(s"$item: ${Input.getKeyName(keyMap(counter))}", 250+counter*30,g)
+        drawCentred(s"$item: ${Input.getKeyName(keyMap(counter))}", 250+counter*30,g)
       } else {
-        SpaceInvader.drawCentred(item, 250+counter*30,g)
+        drawCentred(item, 250+counter*30,g)
       }
       counter += 1
 

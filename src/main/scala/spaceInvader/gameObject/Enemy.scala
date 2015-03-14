@@ -5,6 +5,8 @@ import IDMap._
 import spaceInvader.SpaceInvader._
 import spaceInvader._
 
+import lib.game.GameConfig.Width
+
 object Enemy {
     def apply (eid: Int) = {
         val spawnx = rand(Width)
@@ -140,7 +142,7 @@ class GalacticDragon(x: Int, y: Int, dir: Char) extends Enemy(GalacticDragon, x,
     override def height = 40
 }
 
-class CyberSalmon() extends Enemy(CyberSalmon, SpaceInvader.Width/2, 85/2, Down) with Shooter {
+class CyberSalmon() extends Enemy(CyberSalmon, Width/2, 85/2, Down) with Shooter {
   dx = 0
   dy = 0
 

@@ -4,8 +4,8 @@ import java.util.logging.{Level, Logger}
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import gameObject.IDMap._
-import SpaceInvader.{Height,Width}
 
+import lib.game.GameConfig
 import lib.util.Native
 
 class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
@@ -23,15 +23,14 @@ class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
 
 object SpaceInvader extends App {
   def makeImg(loc: String) = new Image(loc)
-  def drawCentred(s: String, h: Int, g: Graphics) = {
-    g.drawString(s, Width/2 - s.length()*4, h)
-  }
-  val Width = 800
-  val Height = 600
-  val FrameRate = 60
+  
+  GameConfig.Width = 800
+  GameConfig.Height = 600
+  GameConfig.FrameRate = 60
   val game = new GameState
 
   try {
+    import lib.game.GameConfig._
     Native.loadLibraryFromJar()
     val appgc = new AppGameContainer(new SpaceInvader("Space Invaders Coop"))
     appgc.setDisplayMode(Width, Height, false)
