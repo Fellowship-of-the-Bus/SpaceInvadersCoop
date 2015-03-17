@@ -1,6 +1,6 @@
 package com.github.fellowship_of_the_bus
 package spaceInvader
-import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
+import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image, Sound}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import lib.game.GameConfig.{Height,Width}
@@ -9,6 +9,8 @@ import KeyMap._
 import gameObject._
 
 class Game {
+  val shotSound = new Sound("sfx/Shoot.wav")
+
   val player = new Player(100, 400)
   var enemies: List[Enemy] = List()
   var alliedProjectiles: List[Projectile] = List()
@@ -155,6 +157,7 @@ class Game {
           case Some(s) => 
             alliedProjectiles = s :: alliedProjectiles
             numShot += 1
+            shotSound.play
           case _ => ()
         }
       }

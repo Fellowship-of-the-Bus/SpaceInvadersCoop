@@ -71,6 +71,8 @@ class GameState extends BasicGameState {
       drawCentred(accString, Height/2,g)
       drawCentred(scoreString, Height/2+20, g)
       drawCentred(totalString, Height/2+40, g)
+
+      drawCentred("Enter your initials", Height/2+60, g)
     } else {
       drawCentred(accString, Height-40,g)
       drawCentred(scoreString, Height-20, g)
