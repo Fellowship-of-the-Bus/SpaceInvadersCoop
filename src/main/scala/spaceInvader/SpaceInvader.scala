@@ -27,7 +27,7 @@ object SpaceInvader extends App {
   GameConfig.Width = 800
   GameConfig.Height = 600
   GameConfig.FrameRate = 60
-  val game = new GameState
+  lazy val game = new GameState
 
   try {
     import lib.game.GameConfig._
