@@ -1,6 +1,6 @@
 package com.github.fellowship_of_the_bus
 package spaceInvader
-import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener}
+import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener, Sound}
 import org.newdawn.slick.gui.TextField
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
@@ -11,6 +11,7 @@ object MenuTimer {
 }
 
 object Menu extends BasicGameState {
+  val menuSound = new Sound("sfx/Blip.wav")
   import KeyMap._
 
   val choices = List("Play Game", "Options", "Quit")
@@ -23,6 +24,8 @@ object Menu extends BasicGameState {
     MenuTimer.time += delta
     if (MenuTimer.time > 250) {
       if (KeyMap.isKeyDown(Confirm)) {
+        menuSound.stop()
+        menuSound.play()
         choices(curChoice) match {
           case "Play Game" =>
             SpaceInvader.game.reset()
@@ -32,10 +35,15 @@ object Menu extends BasicGameState {
             game.enterState(Mode.OptionsID)
           case "Quit" => System.exit(0)
         }
+
       } else if (KeyMap.isKeyDown(Up)) {
+        menuSound.stop()
+        menuSound.play()
         curChoice = (curChoice-1+choices.length) % choices.length
         MenuTimer.time = 0
       } else if (KeyMap.isKeyDown(Down)) {
+        menuSound.stop()
+        menuSound.play()
         curChoice = (curChoice+1) % choices.length
         MenuTimer.time = 0
       }
@@ -68,6 +76,7 @@ object Menu extends BasicGameState {
 
 object Options extends BasicGameState {
   import KeyMap._
+  import Menu.menuSound
 
   val choices = List("Key Binding", "Back")
   var curChoice = 0
@@ -79,6 +88,8 @@ object Options extends BasicGameState {
     MenuTimer.time += delta
     if (MenuTimer.time > 250) {
       if (input.isKeyDown(keyMap(Confirm))) {
+        menuSound.stop()
+        menuSound.play()
         choices(curChoice) match {
           case "Key Binding" =>
             MenuTimer.time = 0
@@ -88,9 +99,13 @@ object Options extends BasicGameState {
             game.enterState(Mode.MenuID)
         }
       } else if (input.isKeyDown(keyMap(Up))) {
+        menuSound.stop()
+        menuSound.play()
         curChoice = (curChoice-1+choices.length) % choices.length
         MenuTimer.time = 0
       } else if (input.isKeyDown(keyMap(Down))) {
+        menuSound.stop()
+        menuSound.play()
         curChoice = (curChoice+1) % choices.length
         MenuTimer.time = 0
       }

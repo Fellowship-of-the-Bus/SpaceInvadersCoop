@@ -10,6 +10,17 @@ import gameObject._
 
 class Game {
   val shotSound = new Sound("sfx/Shoot.wav")
+  val playerDeathSound = new Sound("sfx/PlayerDeath.wav")
+  val playerHitSound = new Sound("sfx/PlayerHit.wav")
+  val enemyDeathSound = new Sound("sfx/EnemyDeath.wav")
+  val enemyHitSound = new Sound("sfx/EnemyHit.wav")
+  val powerUpSound = new Sound("sfx/Powerup.wav")
+
+  def playSound(s: Sound) = {
+    s.stop
+    s.play
+  }
+
 
   val player = new Player(100, 400)
   var enemies: List[Enemy] = List()
@@ -67,9 +78,11 @@ class Game {
       // detect collision with enemies
       for (e <- enemies; if (e.active)) {
         if (p.collision(e)) {
+          playSound(enemyHitSound)
           e.takeDmg(p.dmg)
           if (!e.active) {
             score += e.difficulty * 1000
+            playSound(enemyDeathSound)
           }
           p.inactivate
           numHit += 1
@@ -91,6 +104,7 @@ class Game {
       // detect collision with enemies
       if (p.collision(player)) {
           player.takeDmg(p.dmg)
+          playSound(playerHitSound)
           p.inactivate
       }
     }
@@ -113,6 +127,8 @@ class Game {
               player.numShot += 1
           }
           p.inactivate
+
+          playSound(powerUpSound)
       }
     }
 
@@ -157,7 +173,7 @@ class Game {
           case Some(s) => 
             alliedProjectiles = s :: alliedProjectiles
             numShot += 1
-            shotSound.play
+            playSound(shotSound)
           case _ => ()
         }
       }
@@ -206,6 +222,6 @@ class Game {
     endTimer = 0
     finalScore = score * (1+1.0*numHit/numShot)
     isGameOver = true
-
+    playSound(playerDeathSound)
   }
 }
