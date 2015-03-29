@@ -12,6 +12,7 @@ object KeyMap{
   val SpaceBar = 4
   val Confirm = 5
   val NextOption = 6
+  val Pause = 7
 
 
   var keyMap = default
@@ -22,6 +23,7 @@ object KeyMap{
     Down -> Input.KEY_DOWN,
     SpaceBar -> Input.KEY_SPACE,
     Confirm -> Input.KEY_RETURN,
+    Pause -> Input.KEY_P,
     NextOption -> Input.KEY_TAB
   )
   def reset = {

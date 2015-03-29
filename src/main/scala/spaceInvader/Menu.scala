@@ -151,7 +151,7 @@ object Listener extends KeyListener {
 object KeyBindOption extends BasicGameState {
   import KeyMap._
 
-  val choices = List("Left", "Right", "Up", "Down", "Shoot", "Confirm", "Back")
+  val choices = List("Left", "Right", "Up", "Down", "Shoot", "Confirm", "Pause", "Back")
   var curChoice = 0
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {

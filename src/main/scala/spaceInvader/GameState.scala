@@ -14,13 +14,23 @@ class GameState extends BasicGameState {
 
   def reset() = gameState = new Game
 
+  var pauseTimer = 0
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     implicit val input = gc.getInput
-    gameState.update(gc, game, delta)
-    if(gameState.endTimer > 2500 && KeyMap.isKeyDown(Confirm)) {
+    if (KeyMap.isKeyDown(Pause) && pauseTimer == 0) {
+      pauseTimer = 30
+      gc.setPaused(!gc.isPaused) // toggle paused
+    }
+
+    if (! gc.isPaused) {
+      gameState.update(gc, game, delta)
+    }
+
+    if (gameState.endTimer > 2500 && KeyMap.isKeyDown(Confirm)) {
         MenuTimer.time = 0
         game.enterState(Mode.MenuID)
     }
+    pauseTimer = Math.max(0, pauseTimer-1)
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
@@ -34,7 +44,8 @@ class GameState extends BasicGameState {
     val score = gameState.score
     val numHit = gameState.numHit
     val numShot = gameState.numShot
-    // draw player
+    
+    g.drawImage(images(BackgroundID), 0, 0)
     g.drawImage(images(TopBorderID), 0, 0)
     if (player.active) {
       val (px, py) = player.topLeftCoord
