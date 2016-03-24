@@ -35,7 +35,7 @@ class CollisionTest extends FunSuite {
   * Inactive GameObjects should not participate in collision detection (with each other or with active ones)
   */
 
-  // initialize the game (to get width and height values for the game screen)
+  // set width and height values for the game screen
   Width = 800
   Height = 600
 
