@@ -1,19 +1,21 @@
 fork := true
 
-resolvers += 
+scalaVersion := "2.11.8"
+
+resolvers +=
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
-// resolvers += Resolver.url(
-//   "sbt-plugin-releases",
-//   new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/")
-// )(Resolver.ivyStylePatterns)
+resolvers += Resolver.url(
+  "sbt-plugin-releases",
+  new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/")
+)(Resolver.ivyStylePatterns)
 
 // need scalatest also as a build dependency: the build implements a custom reporter
-libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test"
 
-libraryDependencies += "junit" % "junit" % "4.10" % "test"
+libraryDependencies += "junit" % "junit" % "4.12" % "test"
 
-libraryDependencies += "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "latest.integration"
+libraryDependencies += "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "0.3-SNAPSHOT"
 
 scalacOptions ++= Seq("-deprecation", "-feature", "-optimize", "-Yinline-warnings")
 
@@ -33,5 +35,5 @@ val separator = System.getProperty("os.name").split(" ")(0).toLowerCase match {
   case x => ":"
 }
 
-javaOptions += "-Djava.library.path=" + System.getProperty("java.library.path") + 
+javaOptions += "-Djava.library.path=" + System.getProperty("java.library.path") +
   separator + "./src/main/resources/natives/" + os
