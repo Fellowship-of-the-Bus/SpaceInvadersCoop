@@ -4,7 +4,8 @@ import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickExcept
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import lib.game.GameConfig.{Height,Width}
-import lib.ui.drawCentred
+import lib.slick2d.ui.drawCentred
+import lib.math.max
 import gameObject.IDMap._
 import KeyMap._
 import gameObject._
@@ -44,7 +45,7 @@ class GameState extends BasicGameState {
     val score = gameState.score
     val numHit = gameState.numHit
     val numShot = gameState.numShot
-    
+
     g.drawImage(images(BackgroundID), 0, 0)
     g.drawImage(images(TopBorderID), 0, 0)
     if (player.active) {
@@ -58,12 +59,16 @@ class GameState extends BasicGameState {
         xs <- objs
         o <- xs
         if (o.active)
-        (x,y) = o.topLeftCoord
-      } g.drawImage(images(o.id), x, y)
-    
+        // (x,y) =
+      } {
+        val (x, y) = o.topLeftCoord
+
+        g.drawImage(images(o.id), x, y)
+      }
+
     drawAll(alliedProjectiles, enemies, enemyProjectiles, powerUps)
 
-    var myDouble: java.lang.Double = 100.0*numHit/numShot
+    val myDouble: java.lang.Double = 100.0*numHit/max(numShot,1)
     val acc = String.format("%1$,.2f", myDouble)
     val accString = s"$numHit / $numShot ... $acc "
     val scoreString = s"Score: $score"
@@ -92,7 +97,7 @@ class GameState extends BasicGameState {
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {
-    
+
   }
 
   def getID() = Mode.GameID

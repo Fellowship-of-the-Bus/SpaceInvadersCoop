@@ -26,7 +26,7 @@ object KeyMap{
     Pause -> Input.KEY_P,
     NextOption -> Input.KEY_TAB
   )
-  def reset = {
+  def reset() = {
     keyMap = default
   }
   def isKeyDown(k: Int) (implicit input: Input) = {

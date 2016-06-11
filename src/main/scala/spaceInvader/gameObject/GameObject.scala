@@ -13,12 +13,12 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
     var y: Int = yc
     def width = 40
     def height = 40
-    
+
     def id: Int
 
     private var isActive = true
     def active = isActive
-    def inactivate = isActive = false
+    def inactivate() = isActive = false
     def move() = {}
 
     def topLeftCoord() = (x-width/2, y-height/2)
@@ -29,7 +29,7 @@ abstract class GameObject (xc : Int, yc : Int, val dir: Char) {
         val (x2, y2) = bottomRightCoord
         val (cx1, cy1) = cand.topLeftCoord
         val (cx2, cy2) = cand.bottomRightCoord
-        
+
         def inRange(v: Int, min: Int, max: Int) = {
           (v >= min) && (v <= max)
         }

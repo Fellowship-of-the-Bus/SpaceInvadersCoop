@@ -4,7 +4,7 @@ import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListe
 import org.newdawn.slick.gui.TextField
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-import lib.ui.drawCentred
+import lib.slick2d.ui.drawCentred
 
 object MenuTimer {
 	var time: Int = 0
@@ -94,7 +94,7 @@ object Options extends BasicGameState {
           case "Key Binding" =>
             MenuTimer.time = 0
             game.enterState(Mode.KeyBindOptionID)
-          case "Back" => 
+          case "Back" =>
             MenuTimer.time = 0
             game.enterState(Mode.MenuID)
         }
@@ -130,7 +130,7 @@ object Options extends BasicGameState {
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {
-    
+
   }
 
   def getID() = Mode.OptionsID
@@ -168,7 +168,7 @@ object KeyBindOption extends BasicGameState {
         MenuTimer.time = 0
         curChoice = 0
       } else if (curChoice == choices.length-1) {
-            
+
       } else {
         if (input.isKeyDown(Listener.curKey)) {
           KeyMap.setKeyBind(curChoice, Listener.curKey)

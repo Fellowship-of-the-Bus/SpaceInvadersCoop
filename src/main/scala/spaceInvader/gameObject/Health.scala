@@ -3,8 +3,8 @@ package spaceInvader.gameObject
 
 trait Health {
     protected var hp: Int
-    def inactivate: Unit
-    
+    def inactivate(): Unit
+
     def takeDmg(amt: Int) = {
         hp -= amt
         if (hp <= 0) {
@@ -13,5 +13,5 @@ trait Health {
     }
 
     def getHp() = hp
-    def setHp(amt: Int) { hp = amt } 
+    def setHp(amt: Int) { hp = amt }
 }

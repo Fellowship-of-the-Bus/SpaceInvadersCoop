@@ -62,7 +62,7 @@ class Game {
       player.move(0, yamt)
     }
 
-    // move all active allied projectiles and 
+    // move all active allied projectiles and
     // detect collisions with enemies
     for (p <- alliedProjectiles; if (p.active)) {
       val (px1, py1) = p.topLeftCoord
@@ -110,8 +110,8 @@ class Game {
     }
 
     for (p <- powerUps; if (p.active)) {
-      val (px1, py1) = p.topLeftCoord
-      val (px2, py2) = p.bottomRightCoord
+      val (px1, _) = p.topLeftCoord
+      val (px2, _) = p.bottomRightCoord
       p.move()
       // detect leaving the game bounds
       if (px1 > (Width + p.width) || (px2 < -p.width)) {
@@ -121,9 +121,9 @@ class Game {
       // detect collision with player
       if (p.collision(player)) {
           p.id match {
-            case PowerHPID => 
+            case PowerHPID =>
               player.setHp(math.min(10, player.getHp + 3))
-            case PowerShotsID => 
+            case PowerShotsID =>
               player.numShot += 1
           }
           p.inactivate
@@ -133,12 +133,12 @@ class Game {
     }
 
 
-    // move all active enemies and deactivate if 
+    // move all active enemies and deactivate if
     // they leave the bottom of the arena
     for (e <- enemies; if (e.active)) {
       e.move()
       e match {
-        case sh: Shooter => 
+        case sh: Shooter =>
           val shot = sh.shoot
           shot match {
             case Some(s) => enemyProjectiles = s :: enemyProjectiles
@@ -170,7 +170,7 @@ class Game {
       if (KeyMap.isKeyDown(SpaceBar)) {
         val shot = player.shoot
         shot match {
-          case Some(s) => 
+          case Some(s) =>
             alliedProjectiles = s :: alliedProjectiles
             numShot += 1
             playSound(shotSound)
@@ -193,10 +193,10 @@ class Game {
       // periodically remove inactive objects
       cleanup
       var curEP = enemyPower
-      var startMod: Int = math.min(
+      val startMod: Int = math.min(
                         math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),
                         2)
-      var eTypeFrame = EnemyEnd-EnemyStart
+      val eTypeFrame = EnemyEnd-EnemyStart
       while (curEP > 0) {
         val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
         curEP -= e.difficulty
