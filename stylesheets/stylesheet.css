@@ -11,9 +11,10 @@ body {
 /* General & 'Reset' Stuff */
 
 .container {
+  text-align: center;
   width: 90%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: auto;
 }
 
 section {
@@ -38,12 +39,14 @@ li {
 header {
   background: rgba(0, 0, 0, 0.1);
   width: 100%;
-  border-bottom: 1px dashed #b5e853;
-  padding: 20px 0;
+  border-bottom: 1px solid #b5e853;
+  padding-top: 20px;
+  padding-bottom: 20px;
   margin: 0 0 40px 0;
 }
 
 header h1 {
+  text-align: center;
   font-size: 30px;
   line-height: 1.5;
   margin: 0 0 0 -40px;
@@ -55,11 +58,6 @@ header h1 {
                0 0 10px rgba(181, 232, 83, 0.1);
   letter-spacing: -1px;
   -webkit-font-smoothing: antialiased;
-}
-
-header h1:before {
-  content: "./ ";
-  font-size: 24px;
 }
 
 header h2 {
@@ -244,4 +242,11 @@ a {
 
 .cf {
   zoom:1;
+}
+
+/* Download section */
+
+#downloads {
+  display: inline-block;
+  margin: 0 auto;
 }
