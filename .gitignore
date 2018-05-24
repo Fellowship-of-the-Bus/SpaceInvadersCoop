@@ -18,3 +18,7 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+
+# Mac metadata
+.DS_Store
+._*
