@@ -15,10 +15,10 @@ val separator = System.getProperty("os.name").split(" ")(0).toLowerCase match {
 }
 
 lazy val commonSettings = Seq(
-  name := "SpaceInvadersCoop",
+  name := "IntergalacticInterlopers",
   organization := "com.github.fellowship_of_the_bus",
   scalaVersion := "2.12.6",
-  version := "1.0",
+  version := "1.1",
   fork := true,
   javacOptions ++= Seq(
     "-encoding", "utf8",

@@ -28,7 +28,7 @@ object SpaceInvader extends App {
   try {
     import lib.game.GameConfig._
     Native.loadLibraryFromJar()
-    val appgc = new AppGameContainer(new SpaceInvader("Space Invaders Coop"))
+    val appgc = new AppGameContainer(new SpaceInvader("Intergalactic Interlopers"))
     appgc.setDisplayMode(Width, Height, false)
     appgc.setTargetFrameRate(FrameRate)
     appgc.setVSync(true)
