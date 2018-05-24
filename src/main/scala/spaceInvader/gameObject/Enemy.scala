@@ -2,26 +2,24 @@ package com.github.fellowship_of_the_bus
 package spaceInvader.gameObject
 import GameObject._
 import IDMap._
-import spaceInvader.SpaceInvader._
 import spaceInvader._
 
 import lib.game.GameConfig.Width
 
 object Enemy {
-    def apply (eid: Int) = {
-        val spawnx = rand(Width)
-        val spawny = -20-rand(60)
-        eid match {
-          case DroneID => new Drone(spawnx, spawny, Down)
-          case FighterID => new Fighter(spawnx, spawny, Down)
-          case SpaceTurtleID => new SpaceTurtle(spawnx, spawny, Down)
-          case CosmicBeeID => new CosmicBee(spawnx, spawny, Down)
-          case GalacticDragonID => new GalacticDragon(spawnx, spawny, Down)
-        }
+  def apply (eid: Int) = {
+    val spawnx = rand(Width)
+    val spawny = -20-rand(60)
+    eid match {
+      case DroneID => new Drone(spawnx, spawny, Down)
+      case FighterID => new Fighter(spawnx, spawny, Down)
+      case SpaceTurtleID => new SpaceTurtle(spawnx, spawny, Down)
+      case CosmicBeeID => new CosmicBee(spawnx, spawny, Down)
+      case GalacticDragonID => new GalacticDragon(spawnx, spawny, Down)
     }
+  }
 }
 
-import Enemy._
 abstract class Enemy (base: EnemyType, xc: Int, yc: Int, dir: Char) extends VelObject(xc,yc,dir) with Health {
   x = clamp(x,width,Width)
 
@@ -57,7 +55,7 @@ object Drone extends EnemyType {
   val maxHp = 1
   val difficulty = 1
   override val shotInterval = 60 * 3
-  override val shotType = BulletID    
+  override val shotType = BulletID
 }
 
 object Fighter extends EnemyType {

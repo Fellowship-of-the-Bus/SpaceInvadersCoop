@@ -1,7 +1,6 @@
 package com.github.fellowship_of_the_bus
 package spaceInvader.gameObject
 import spaceInvader._
-import spaceInvader.SpaceInvader._
 import GameObject._
 import IDMap._
 
@@ -9,7 +8,7 @@ import lib.game.GameConfig.{Width,Height}
 
 object PowerUp {
   def apply () = {
-    var spawnx: Int = 0 
+    var spawnx: Int = 0
     val width = 30
     var dir: Char = 0
 
@@ -19,7 +18,7 @@ object PowerUp {
     } else {
         spawnx = Width + (width / 2)
         dir = Left
-    } 
+    }
     val spawny = rand(Height/4 * 3) + (Height / 4)
     val id = rand(EndPowerUp - StartPowerUp) + StartPowerUp
 

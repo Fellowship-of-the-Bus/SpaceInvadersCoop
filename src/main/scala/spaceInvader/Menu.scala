@@ -1,7 +1,6 @@
 package com.github.fellowship_of_the_bus
 package spaceInvader
-import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener, Sound}
-import org.newdawn.slick.gui.TextField
+import org.newdawn.slick.{GameContainer, Graphics, Color, Input, KeyListener, Sound}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import lib.slick2d.ui.drawCentred
@@ -18,7 +17,6 @@ object Menu extends BasicGameState {
   var curChoice = 0
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
-    import Mode._
     implicit val input = gc.getInput
 
     MenuTimer.time += delta
@@ -51,7 +49,7 @@ object Menu extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import lib.game.GameConfig.{Width, Height}
+    // import lib.game.GameConfig.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
     var counter = 0
@@ -82,7 +80,6 @@ object Options extends BasicGameState {
   var curChoice = 0
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
-    import Mode._
     val input = gc.getInput
 
     MenuTimer.time += delta
@@ -113,7 +110,7 @@ object Options extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import lib.game.GameConfig.{Width, Height}
+    // import lib.game.GameConfig.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
     var counter = 0
@@ -155,7 +152,6 @@ object KeyBindOption extends BasicGameState {
   var curChoice = 0
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
-    import Mode._
     implicit val input = gc.getInput
 
     MenuTimer.time += delta
@@ -179,7 +175,7 @@ object KeyBindOption extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import lib.game.GameConfig.{Width, Height}
+    // import lib.game.GameConfig.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
     var counter = 0
