@@ -1,12 +1,23 @@
 package com.github.fellowship_of_the_bus
 package spaceInvader
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, KeyListener, Sound}
-import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
+import org.newdawn.slick.state.{BasicGameState => SlickBasicGameState, StateBasedGame}
 
 import lib.slick2d.ui.drawCentred
+import gameObject.IDMap._
 
 object MenuTimer {
 	var time: Int = 0
+}
+
+trait BasicGameState extends SlickBasicGameState {
+  def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
+    import lib.game.GameConfig.{Width, Height}
+    val fotb = images(LogoID)
+    g.drawImage(images(BackgroundID), 0, 0)
+    g.drawImage(images(TopBorderID), 0, 0)
+    g.drawImage(fotb, Width/2-fotb.getWidth/2, 3*Height/4)
+  }
 }
 
 object Menu extends BasicGameState {
@@ -48,10 +59,9 @@ object Menu extends BasicGameState {
     }
   }
 
-  def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    // import lib.game.GameConfig.{Width, Height}
-    //g.drawImage(background.....)
-    //g.drawImage(logo......)
+  override def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
+    super.render(gc, game, g)
+
     var counter = 0
     for ( item <- choices ) {
       if (counter == curChoice) {
@@ -109,10 +119,8 @@ object Options extends BasicGameState {
     }
   }
 
-  def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    // import lib.game.GameConfig.{Width, Height}
-    //g.drawImage(background.....)
-    //g.drawImage(logo......)
+  override def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
+    super.render(gc, game, g)
     var counter = 0
     for ( item <- choices ) {
       if (counter == curChoice) {
@@ -174,21 +182,18 @@ object KeyBindOption extends BasicGameState {
     }
   }
 
-  def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    // import lib.game.GameConfig.{Width, Height}
-    //g.drawImage(background.....)
-    //g.drawImage(logo......)
+  override def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
+    super.render(gc, game, g)
     var counter = 0
     drawCentred("Press Tab to select next option", 200, g)
     for ( item <- choices ) {
       if (counter == curChoice) {
         g.setColor(new Color(255, 0, 0))
       }
-      if (counter != choices.length-1) {
-        drawCentred(s"$item: ${Input.getKeyName(keyMap(counter))}", 250+counter*30,g)
-      } else {
-        drawCentred(item, 250+counter*30,g)
-      }
+      val text =
+        if (counter != choices.length-1) s"$item: ${Input.getKeyName(keyMap(counter))}"
+        else item
+      drawCentred(text, 250+counter*20, g)
       counter += 1
 
       g.setColor(Color.white)

@@ -2,7 +2,7 @@ package com.github.fellowship_of_the_bus
 package spaceInvader.gameObject
 import spaceInvader.SpaceInvader._
 
-object IDMap{
+object IDMap {
   val playerID = 1
 
   val EnemyStart = 11
@@ -28,6 +28,7 @@ object IDMap{
   val HeartID = 1002
   val TopBorderID = 1003
   val BackgroundID = 1004
+  val LogoID = 1005
 
   val imageMap = Map(
     playerID -> "img/PlayerR.png",
@@ -48,7 +49,8 @@ object IDMap{
     GameOverID -> "img/GameOver.png",
     HeartID -> "img/Heart.png",
     TopBorderID -> "img/TopBorder.png",
-    BackgroundID -> "img/Background.png"
+    BackgroundID -> "img/Background.png",
+    LogoID -> "img/FotB-Logo.png"
   )
 
   lazy val images = imageMap.map { x =>
