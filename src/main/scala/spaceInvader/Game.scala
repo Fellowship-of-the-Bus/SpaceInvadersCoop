@@ -181,8 +181,9 @@ class Game {
 
       for (e <- enemies; if (e.active)) {
         if (player.collision(e)) {
-            player.takeDmg((e.getHp-1)/2+1)
-            e.takeDmg(e.getHp+1)
+          player.takeDmg((e.getHp-1)/2+1)
+          e.takeDmg(e.getHp+1)
+          playSound(playerHitSound)
         }
       }
     }
