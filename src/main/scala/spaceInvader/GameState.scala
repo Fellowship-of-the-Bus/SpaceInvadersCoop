@@ -13,10 +13,21 @@ import IDMap._
 
 class GameState extends BasicGameState {
   implicit val bg = Color.transparent
-  var gameState = new Game
+  var gameState = new Game(() => gameover())
   var name: TextField = null
+  var gameoverUI = new Pane(0, 0, Width, Height, Color.transparent)(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
 
-  def reset() = gameState = new Game
+  // reset all local state to a fresh state
+  def reset(): Unit = {
+    name.text = ""
+    gameState = new Game(() => gameover())
+    pauseTimer = 0
+  }
+
+  def gameover(): Unit = {
+    name.setFocus(true)
+    updateGameoverUI()
+  }
 
   var pauseTimer = 0
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
@@ -30,10 +41,6 @@ class GameState extends BasicGameState {
       gameState.update(gc, game, delta)
     }
 
-    if (gameState.endTimer > 2500 && KeyMap.isKeyDown(Confirm)) {
-        MenuTimer.time = 0
-        game.enterState(Mode.MenuID)
-    }
     pauseTimer = Math.max(0, pauseTimer-1)
   }
 

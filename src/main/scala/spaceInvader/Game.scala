@@ -8,7 +8,7 @@ import gameObject.IDMap._
 import KeyMap._
 import gameObject._
 
-class Game {
+class Game(gameoverCallback: () => Unit) {
   val shotSound = new Sound("sfx/Shoot.wav")
   val playerDeathSound = new Sound("sfx/PlayerDeath.wav")
   val playerHitSound = new Sound("sfx/PlayerHit.wav")
@@ -122,7 +122,8 @@ class Game {
       if (p.collision(player)) {
           p.id match {
             case PowerHPID =>
-              player.setHp(math.min(10, player.getHp + 3))
+              val hpRecoveryAmt = 3
+              player.setHp(math.min(player.maxHp, player.getHp + hpRecoveryAmt))
             case PowerShotsID =>
               player.numShot += 1
           }
@@ -224,5 +225,6 @@ class Game {
     finalScore = score * (1+1.0*numHit/numShot)
     isGameOver = true
     playSound(playerDeathSound)
+    gameoverCallback()
   }
 }
