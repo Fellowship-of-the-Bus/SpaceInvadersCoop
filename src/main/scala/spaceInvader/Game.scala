@@ -212,12 +212,13 @@ class Game(gameoverCallback: () => Unit) {
 
     if (! player.active && isActive) {
       gameOver()
-    } else if (isGameOver) {
+    } else if (isGameOver && endTimer <= endTimerMax) {
       endTimer += delta
     }
   }
 
   var endTimer: Int = 0
+  val endTimerMax = 2500
   var finalScore = 0.0
   var isGameOver = false
   def gameOver() = {

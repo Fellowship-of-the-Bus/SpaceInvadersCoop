@@ -4,7 +4,6 @@ package spaceInvader
 import org.newdawn.slick.{Input}
 
 object KeyMap{
-
   val Left = 0
   val Right = 1
   val Up = 2
@@ -13,7 +12,7 @@ object KeyMap{
   val Confirm = 5
   val NextOption = 6
   val Pause = 7
-
+  val Exit = 8
 
   var keyMap = default
   def default = Map(
@@ -24,7 +23,8 @@ object KeyMap{
     SpaceBar -> Input.KEY_SPACE,
     Confirm -> Input.KEY_RETURN,
     Pause -> Input.KEY_P,
-    NextOption -> Input.KEY_TAB
+    NextOption -> Input.KEY_TAB,
+    Exit -> Input.KEY_ESCAPE
   )
   def reset() = {
     keyMap = default
@@ -35,5 +35,4 @@ object KeyMap{
   def setKeyBind(key:Int,newKey: Int) (implicit input:Input) = {
     keyMap = keyMap + (key -> newKey)
   }
-
 }

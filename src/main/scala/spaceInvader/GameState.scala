@@ -6,22 +6,34 @@ import org.newdawn.slick.gui.AbstractComponent
 
 import lib.game.GameConfig.{Height,Width}
 import lib.slick2d.ui.{drawCentred,Pane,TextField,AnchoredImage,Label,Button}
-import lib.math.max
 import KeyMap._
 import gameObject._
 import IDMap._
+import ScoreUtil._
 
 class GameState extends BasicGameState {
   implicit val bg = Color.transparent
   var gameState = new Game(() => gameover())
   var name: TextField = null
-  var gameoverUI = new Pane(0, 0, Width, Height, Color.transparent)(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
+  val gameoverUI = new Pane(0, 0, Width, Height, Color.transparent)(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
+  var scoreboardUI: ScoreboardUI = null
+  var scoreSubmitted = false
+  var scoreTimer = 0
+  val scoreTimerMax = 1000
 
   // reset all local state to a fresh state
   def reset(): Unit = {
     name.text = ""
     gameState = new Game(() => gameover())
     pauseTimer = 0
+    scoreSubmitted = false
+    scoreTimer = 0
+  }
+
+  def gotoMainMenu(game: StateBasedGame): Unit = {
+    MenuTimer.time = 0
+    scoreTimer = 0
+    game.enterState(Mode.MenuID)
   }
 
   def gameover(): Unit = {
@@ -42,20 +54,27 @@ class GameState extends BasicGameState {
     }
 
     pauseTimer = Math.max(0, pauseTimer-1)
-  }
 
-  case class Score(name: String, score: Int, numHit: Int, numShot: Int, power: Int) {
-    val accuracy: java.lang.Double = 100.0*numHit/max(numShot,1)
-
-    def accuracyString: String = s"$numHit / $numShot ... ${String.format("%1$,.2f", accuracy)} "
-    def scoreString: String = s"Score: ${score}"
-
-    def totalString = s"Total: ${score.asInstanceOf[Int]}"
+    if (scoreSubmitted) {
+      // enable exiting to main menu with escape key or enter key after submitting a score
+      if (scoreTimer >= scoreTimerMax && (KeyMap.isKeyDown(Confirm) || KeyMap.isKeyDown(Exit))) {
+        gotoMainMenu(game)
+      }
+      // tick the scoreboard timer
+      if (scoreTimer <= scoreTimerMax) {
+        scoreTimer += delta
+      }
+    } else {
+      // enable exiting to main menu with the escape key after clearing the game, but before submitting a score
+      if (gameState.endTimer >= gameState.endTimerMax && KeyMap.isKeyDown(Exit)) {
+        gotoMainMenu(game)
+      }
+    }
   }
 
   // generate some default scores
   val defaultNames = List("AAA", "LAW", "GOD", "ACE", "PWN", "RAM", "TRB", "KKW", "ARD", "RJS")
-  val defaultScoreBoard = for (i <- 0 until 10)
+  val defaultScoreBoard = for (i <- 0 until numScores)
     yield Score(
       defaultNames(i),
       scala.math.pow(2, i).asInstanceOf[Int]*500,
@@ -101,7 +120,11 @@ class GameState extends BasicGameState {
     }
 
     if (gameState.isGameOver) {
-      gameoverUI.render(gc, game, g)
+      if (scoreSubmitted) {
+        scoreboardUI.render(gc, game, g)
+      } else {
+        gameoverUI.render(gc, game, g)
+      }
     } else {
       val score = getScore
       g.setColor(Color.white)
@@ -114,6 +137,8 @@ class GameState extends BasicGameState {
   def submitScore(score: Score): Unit = {
     import better.files._
     import net.harawata.appdirs.{AppDirsFactory}
+
+    if (scoreSubmitted || name.text == "") return
 
     val appname = "intergalactic-interlopers"
     val version = "1.0.0"
@@ -132,27 +157,26 @@ class GameState extends BasicGameState {
     }
     var scoreboard = score::oldScores++defaultScoreBoard
 
-    // sort by score
-    scoreboard = scoreboard.sortBy(-_.score)
-    println(scoreboard)
+    // sort by score, descending
+    scoreboard = scoreboard.sortBy(-_.score).distinct
 
     // use only the top 10 scores
-    scoreboard = scoreboard.take(10)
+    scoreboard = scoreboard.take(numScores)
 
     // write highscore table
+    file.writeSerialized(scoreboard)
 
     // display table
-    println(scoreboard)
-
+    scoreboardUI.updateScore(scoreboard)
+    scoreSubmitted = true
   }
 
   var updateGameoverUI = () => ()
   def init(gc: GameContainer, game: StateBasedGame) = {
     implicit val font = gc.getDefaultFont
-    val longestName = "AAAAAAAAAAAAAAAAAAAA"
-    val nameWidth = font.getWidth(longestName) // allow space for up to 20 characters
     val numChildren = 5 // number of children of main (not root) pane
     val padding = 20 // start location of each item is padding*numChildren
+    val nameWidth = font.getWidth(longestName) // allow space for up to 20 characters
 
     // set up name entry field and label
     val text = "Enter your initials: "
@@ -199,10 +223,8 @@ class GameState extends BasicGameState {
       val center = width*n+buttonAreaWidth/numButtons/2
       startPad+center-buttonWidth/2
     }
-    val mainMenu = new Button("Main Menu", buttonX(0), 0, buttonWidth, buttonHeight, () => {
-      MenuTimer.time = 0
-      game.enterState(Mode.MenuID)
-    }).setSelectable(() => gameState.endTimer > 2500)
+    val mainMenu = new Button("Main Menu", buttonX(0), 0, buttonWidth, buttonHeight, () => gotoMainMenu(game))
+      .setSelectable(() => gameState.endTimer >= gameState.endTimerMax)
     val submit = new Button("Submit Score", buttonX(1), 0, buttonWidth, buttonHeight, () => {
       submitScore(getScore)
     }).setSelectable(() => name.text != "")
@@ -218,6 +240,13 @@ class GameState extends BasicGameState {
     gameoverUI.addChildren(image, pane)
     gameoverUI.setState(getID())
     gameoverUI.init(gc, game)
+
+    // setup scoreboard UI
+    val scoreboardWidth  = font.getWidth(headerString)
+    val scoreboardHeight = (numScores+2)*font.getHeight(headerString) // +2 for header and buttons
+    scoreboardUI = new ScoreboardUI(Width/2-scoreboardWidth/2, Height/2-scoreboardHeight/2, scoreboardWidth, scoreboardHeight, () => gotoMainMenu(game), () => scoreTimer >= scoreTimerMax)
+    scoreboardUI.setState(getID())
+    scoreboardUI.init(gc, game)
   }
 
   def getID() = Mode.GameID
