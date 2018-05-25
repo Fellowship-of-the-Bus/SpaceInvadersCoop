@@ -219,7 +219,7 @@ class GameState extends BasicGameState {
     val submit = new Button("Submit Score", buttonX(1), 0, buttonWidth, buttonHeight, () => {
       submitScore(getScore)
     }).setSelectable(() => name.text != "")
-    val buttonPane = new Pane(0, padding*4, areaWidth, textHeight)
+    val buttonPane = new Pane(0, padding*4, areaWidth, textHeight, Color.transparent)
     buttonPane.addChildren(mainMenu, submit)
 
     // set up center pane
