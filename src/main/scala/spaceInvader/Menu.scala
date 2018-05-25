@@ -85,7 +85,7 @@ object Menu extends BasicGameState {
 object Options extends BasicGameState {
   import KeyMap._
 
-  val choices = List("Key Binding", "Clear High Scores", "Back")
+  val choices = List("Key Binding", "Clear High Scores", "Show FPS Counter", "Back")
   var curChoice = 0
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
@@ -100,6 +100,8 @@ object Options extends BasicGameState {
             game.enterState(Mode.KeyBindOptionID)
           case "Clear High Scores" =>
             game.enterState(Mode.ClearHighScoresID)
+          case "Show FPS Counter" =>
+            gc.setShowFPS(! gc.isShowingFPS())
           case "Back" =>
             game.enterState(Mode.MenuID)
         }

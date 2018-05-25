@@ -9,7 +9,7 @@ import lib.util.Native
 
 class SpaceInvader(gamename: String) extends StateBasedGame(gamename) {
   def initStatesList(gc: GameContainer) = {
-    gc.setShowFPS(true)
+    gc.setShowFPS(false)
     addState(Menu)
     addState(SpaceInvader.game)
     addState(Options)
