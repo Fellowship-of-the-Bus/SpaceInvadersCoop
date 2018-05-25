@@ -8,4 +8,5 @@ object Mode {
   val OptionsID = 3
   val GameOverID = 4
   val KeyBindOptionID = 5
+  val ClearHighScoresID = 6
 }

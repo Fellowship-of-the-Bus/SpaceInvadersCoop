@@ -17,6 +17,19 @@ case class Score(name: String, score: Int, numHit: Int, numShot: Int, power: Int
 }
 
 object ScoreUtil {
+  def getScoreboardFile() = {
+    import better.files._
+    import net.harawata.appdirs.{AppDirsFactory}
+
+    val appname = "intergalactic-interlopers"
+    val version = "1.0.0"
+    val org = "fellowship-of-the-bus"
+
+    val dir = AppDirsFactory.getInstance.getUserDataDir(appname, version, org)
+
+    File(dir).createDirectories()/"scoreboard"
+  }
+
   object Header {
     val name = "Name"
     val score = "Score"

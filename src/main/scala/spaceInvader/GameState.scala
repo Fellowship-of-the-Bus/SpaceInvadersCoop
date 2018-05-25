@@ -31,7 +31,7 @@ class GameState extends BasicGameState {
   }
 
   def gotoMainMenu(game: StateBasedGame): Unit = {
-    MenuTimer.time = 0
+    MenuUtil.time = 0
     scoreTimer = 0
     game.enterState(Mode.MenuID)
   }
@@ -135,19 +135,10 @@ class GameState extends BasicGameState {
   }
 
   def submitScore(score: Score): Unit = {
-    import better.files._
-    import net.harawata.appdirs.{AppDirsFactory}
-
     if (scoreSubmitted || name.text == "") return
 
-    val appname = "intergalactic-interlopers"
-    val version = "1.0.0"
-    val org = "fellowship-of-the-bus"
-
-    val dir = AppDirsFactory.getInstance.getUserDataDir(appname, version, org)
-
     // read highscore table
-    val file = (File(dir).createDirectories()/"scoreboard").createIfNotExists()
+    val file = getScoreboardFile().createIfNotExists()
 
     var oldScores: List[Score] = Nil
     try {
