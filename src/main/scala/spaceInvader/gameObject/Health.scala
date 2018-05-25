@@ -12,6 +12,7 @@ trait Health {
         }
     }
 
+    def maxHp: Int
     def getHp() = hp
     def setHp(amt: Int) { hp = amt }
 }

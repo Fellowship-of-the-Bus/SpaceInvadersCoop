@@ -23,6 +23,7 @@ object Enemy {
 abstract class Enemy (base: EnemyType, xc: Int, yc: Int, dir: Char) extends VelObject(xc,yc,dir) with Health {
   x = clamp(x,width,Width)
 
+  def maxHp = base.maxHp
   var hp = base.maxHp
   def shotType = base.shotType
   val shotInterval = base.shotInterval
