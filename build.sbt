@@ -60,7 +60,8 @@ lazy val commonSettings = Seq(
     "com.github.pathikrit" %% "better-files" % "3.5.0",
     "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-slick2d-lib" % "0.2-SNAPSHOT" changing(),
     "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "0.4-SNAPSHOT" changing(),
-    "org.jbox2d" % "jbox2d-library" % "2.2.1.1"
+    "org.jbox2d" % "jbox2d-library" % "2.2.1.1",
+    "net.harawata" % "appdirs" % "1.0.0"
   )
 )
 

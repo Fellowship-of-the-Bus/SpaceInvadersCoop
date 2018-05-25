@@ -5,7 +5,7 @@ import org.newdawn.slick.state.StateBasedGame
 import org.newdawn.slick.gui.AbstractComponent
 
 import lib.game.GameConfig.{Height,Width}
-import lib.slick2d.ui.{drawCentred,Pane,TextField,AnchoredImage,Label}
+import lib.slick2d.ui.{drawCentred,Pane,TextField,AnchoredImage,Label,Button}
 import lib.math.max
 import KeyMap._
 import gameObject._
@@ -44,16 +44,27 @@ class GameState extends BasicGameState {
     pauseTimer = Math.max(0, pauseTimer-1)
   }
 
-  def accuracyString: String = {
-    val numHit = gameState.numHit
-    val numShot = gameState.numShot
+  case class Score(name: String, score: Int, numHit: Int, numShot: Int, power: Int) {
     val accuracy: java.lang.Double = 100.0*numHit/max(numShot,1)
-    s"$numHit / $numShot ... ${String.format("%1$,.2f", accuracy)} "
+
+    def accuracyString: String = s"$numHit / $numShot ... ${String.format("%1$,.2f", accuracy)} "
+    def scoreString: String = s"Score: ${score}"
+
+    def totalString = s"Total: ${score.asInstanceOf[Int]}"
   }
 
-  def scoreString: String = s"Score: ${gameState.score}"
+  // generate some default scores
+  val defaultNames = List("AAA", "LAW", "GOD", "ACE", "PWN", "RAM", "TRB", "KKW", "ARD", "RJS")
+  val defaultScoreBoard = for (i <- 0 until 10)
+    yield Score(
+      defaultNames(i),
+      scala.math.pow(2, i).asInstanceOf[Int]*500,
+      i,
+      i*(i+1),
+      (i+1)/2
+    )
 
-  def totalString = s"Total: ${gameState.finalScore.asInstanceOf[Int]}"
+  def getScore = Score(name.text, gameState.finalScore.asInstanceOf[Int], gameState.numHit, gameState.numShot, gameState.player.numShot)
 
   override def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     import IDMap._
@@ -91,19 +102,57 @@ class GameState extends BasicGameState {
 
     if (gameState.isGameOver) {
       gameoverUI.render(gc, game, g)
-      name.setFocus(true)
     } else {
-      drawCentred(accuracyString, Height-40,g)
-      drawCentred(scoreString, Height-20, g)
+      val score = getScore
+      g.setColor(Color.white)
+      g.drawString(s"Power Level: ${score.power}", 0, Height-40)
+      drawCentred(score.accuracyString, Height-40,g)
+      drawCentred(score.scoreString, Height-20, g)
     }
   }
 
-  var gameoverUI = new Pane(0, 0, Width, Height, Color.transparent)(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
+  def submitScore(score: Score): Unit = {
+    import better.files._
+    import net.harawata.appdirs.{AppDirsFactory}
 
+    val appname = "intergalactic-interlopers"
+    val version = "1.0.0"
+    val org = "fellowship-of-the-bus"
+
+    val dir = AppDirsFactory.getInstance.getUserDataDir(appname, version, org)
+
+    // read highscore table
+    val file = (File(dir).createDirectories()/"scoreboard").createIfNotExists()
+
+    var oldScores: List[Score] = Nil
+    try {
+      oldScores = file.readDeserialized[List[Score]]
+    } catch {
+      case _: Exception => // file is corrupted or empty, ignore its contents
+    }
+    var scoreboard = score::oldScores++defaultScoreBoard
+
+    // sort by score
+    scoreboard = scoreboard.sortBy(-_.score)
+    println(scoreboard)
+
+    // use only the top 10 scores
+    scoreboard = scoreboard.take(10)
+
+    // write highscore table
+
+    // display table
+    println(scoreboard)
+
+  }
+
+  var updateGameoverUI = () => ()
   def init(gc: GameContainer, game: StateBasedGame) = {
     implicit val font = gc.getDefaultFont
-    val nameWidth = font.getWidth("AAAAAAAAAAAAAAAAAAAA") // allow space for up to 20 characters
-    val padding = 20 // start location of each item is padding*N
+    val longestName = "AAAAAAAAAAAAAAAAAAAA"
+    val nameWidth = font.getWidth(longestName) // allow space for up to 20 characters
+    val numChildren = 5 // number of children of main (not root) pane
+    val padding = 20 // start location of each item is padding*numChildren
 
     // set up name entry field and label
     val text = "Enter your initials: "
@@ -111,25 +160,63 @@ class GameState extends BasicGameState {
     val textHeight = font.getHeight(text)
     val label = new Label(text, 0, 0, textWidth, textHeight)
     name = new TextField(gc, textWidth, 0, nameWidth, textHeight, (source: AbstractComponent) => {
-      println(name.text)
+      submitScore(getScore)
     })
+    name.maxLength(longestName.length)
     val nameEntry = new Pane(0, padding*3, textWidth+name.width, textHeight, Color.transparent)
     nameEntry.addChildren(label, name)
 
+    // dimensions of main gameover pane
+    val areaWidth = nameEntry.width
+    val areaHeight = padding*numChildren
+
     // accuracy, score, total strings
-    val accuracy = new Label(accuracyString, nameEntry.width, 0)
-    val score = new Label(scoreString, nameEntry.width, padding)
-    val total = new Label(totalString, nameEntry.width, padding*2)
+    val accuracy = new Label("", areaWidth, 0)
+    val scoreText = new Label("", areaWidth, padding)
+    val total = new Label("", areaWidth, padding*2)
+
+    // callback to update the text elements when they are known
+    updateGameoverUI = () => {
+      val score = getScore
+      accuracy.text = score.accuracyString
+      scoreText.text = score.scoreString
+      total.text = score.totalString
+      accuracy.center()
+      scoreText.center()
+      total.center()
+    }
+
+    // setup return button, submit button
+    // if more buttons area added, would need to increase areaWidth
+    val numButtons = 2
+    val buttonWidth = 120
+    val buttonHeight = textHeight
+    val buttonPadding = 50
+    val buttonAreaWidth = areaWidth-buttonPadding*numButtons
+    val startPad = (areaWidth-buttonAreaWidth)/2
+    def buttonX(n: Int) = {
+      val width = buttonAreaWidth/numButtons
+      val center = width*n+buttonAreaWidth/numButtons/2
+      startPad+center-buttonWidth/2
+    }
+    val mainMenu = new Button("Main Menu", buttonX(0), 0, buttonWidth, buttonHeight, () => {
+      MenuTimer.time = 0
+      game.enterState(Mode.MenuID)
+    }).setSelectable(() => gameState.endTimer > 2500)
+    val submit = new Button("Submit Score", buttonX(1), 0, buttonWidth, buttonHeight, () => {
+      submitScore(getScore)
+    }).setSelectable(() => name.text != "")
+    val buttonPane = new Pane(0, padding*4, areaWidth, textHeight)
+    buttonPane.addChildren(mainMenu, submit)
 
     // set up center pane
-    val areaWidth = nameEntry.width
-    val areaHeight = padding*4
     val pane = new Pane(Width/2-areaWidth/2, Height/2-areaHeight/2, areaWidth, areaHeight, Color.transparent)
-    pane.addChildren(accuracy, score, total, nameEntry)
+    pane.addChildren(accuracy, scoreText, total, nameEntry, buttonPane)
 
     // setup GameOver image and center pane
     val image = new AnchoredImage(images(GameOverID), 0, 0, Width, Height)
     gameoverUI.addChildren(image, pane)
+    gameoverUI.setState(getID())
     gameoverUI.init(gc, game)
   }
 
