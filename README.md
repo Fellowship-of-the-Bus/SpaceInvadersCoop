@@ -93,7 +93,7 @@ Enemies are randomly spawned in waves every 2 seconds from the top of the screen
 
 [screenshot]: http://fellowship-of-the-bus.github.io/SpaceInvadersCoop/images/screenshot.png
 [logo]: src/main/resources/img/FotB-Logo.png
-[releases]: ./releases
+[releases]: ../../releases
 [sbt]: http://www.scala-sbt.org/
 
 [health]: src/main/resources/img/PowerHP.png
