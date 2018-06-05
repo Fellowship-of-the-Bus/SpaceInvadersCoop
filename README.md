@@ -35,9 +35,9 @@ You control a single small spaceship.
 
 ![Player][ship]
 
-    * Health: 10
-    * Speed: 5
-    * Shoots one bullet every 0.3 seconds
+  * Health: 10
+  * Speed: 5
+  * Shoots one bullet every 0.3 seconds
 
 There are two types of power-ups that drop randomly:
 
