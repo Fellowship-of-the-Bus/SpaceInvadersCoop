@@ -4,14 +4,15 @@ package spaceInvader
 import org.newdawn.slick.{Input}
 
 object KeyMap{
+  // order must be kept in sync with KeyBindOption
   val Left = 0
   val Right = 1
   val Up = 2
   val Down = 3
   val SpaceBar = 4
   val Confirm = 5
-  val NextOption = 6
-  val Pause = 7
+  val Pause = 6
+  val NextOption = 7
   val Exit = 8
 
   var keyMap = default
