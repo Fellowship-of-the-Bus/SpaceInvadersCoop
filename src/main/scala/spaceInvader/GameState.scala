@@ -24,6 +24,7 @@ class GameState extends BasicGameState {
   // reset all local state to a fresh state
   def reset(): Unit = {
     name.text = ""
+    name.setFocus(false)
     gameState = new Game(() => gameover())
     pauseTimer = 0
     scoreSubmitted = false
