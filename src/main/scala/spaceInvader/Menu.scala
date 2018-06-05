@@ -23,9 +23,11 @@ trait BasicGameState extends SlickBasicGameState {
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     import lib.game.GameConfig.{Width, Height}
     val fotb = images(LogoID)
+    val logo = images(GameLogoID)
     g.drawImage(images(BackgroundID), 0, 0)
     g.drawImage(images(TopBorderID), 0, 0)
     g.drawImage(fotb, Width/2-fotb.getWidth/2, 3*Height/4)
+    g.drawImage(logo, Width/2-logo.getWidth/2, Height/4)
   }
 }
 

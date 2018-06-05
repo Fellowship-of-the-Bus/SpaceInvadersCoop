@@ -29,6 +29,7 @@ object IDMap {
   val TopBorderID = 1003
   val BackgroundID = 1004
   val LogoID = 1005
+  val GameLogoID = 1006
 
   val imageMap = Map(
     playerID -> "img/PlayerR.png",
@@ -50,7 +51,8 @@ object IDMap {
     HeartID -> "img/Heart.png",
     TopBorderID -> "img/TopBorder.png",
     BackgroundID -> "img/Background.png",
-    LogoID -> "img/FotB-Logo.png"
+    LogoID -> "img/FotB-Logo.png",
+    GameLogoID -> "img/GameLogo.png",
   )
 
   lazy val images = imageMap.map { x =>
