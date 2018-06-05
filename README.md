@@ -32,7 +32,9 @@ Movement is essential to staying alive. As the game progresses, the enemies that
 ### Player
 
 You control a single small spaceship.
+
 ![Player][ship]
+
     * Health: 10
     * Speed: 5
     * Shoots one bullet every 0.3 seconds
@@ -113,6 +115,8 @@ Enemies are randomly spawned in waves every 2 seconds from the top of the screen
 [video]: https://www.youtube.com/watch?v=LrigPZlEug0
 [video image]: images/video.png
 [screenshot]: images/screenshot.png
+[scoreboard]: images/scoreboard.png
+[gameover]: images/gameover.png
 
 [game logo]: src/main/resources/img/GameLogo.png
 [logo]: src/main/resources/img/FotB-Logo.png
