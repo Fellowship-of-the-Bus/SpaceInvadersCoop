@@ -1,4 +1,4 @@
-# Intergalactic Interlopers
+![Intergalactic Interlopers][game logo]
 
 ![Fellowship of the Bus][logo]
 
@@ -23,9 +23,11 @@ All controls in this game can be remapped to any keyboard keys as desired. By de
 ## How to Play
 The object of the game is to defeat as many enemies as possible before losing all of your health. Your current health is represented by a number of hearts in the lower left corner of the screen.
 
-![Intergalactic Interlopers][screenshot]
+[![video image]][video]
 
 Movement is essential to staying alive. As the game progresses, the enemies that spawn in each wave increase in both number and difficulty. Each [enemy type](#enemy-types) has different stats and behavior. You take 1 damage if you are hit by an enemy bullet. If you collide with an enemy, they are instantly killed, but you take damage equal to half of their remaining health rounded up. Since the number of onscreen enemies - many of whom fire their own projectiles - increases quickly, the game has the distinct feel of a "bullet hell" game crossed with traditional arcade space shooter games.
+
+![Intergalactic Interlopers][gameplay]
 
 ### Player
 
@@ -40,7 +42,13 @@ There are two types of power-ups that drop randomly:
 1. ![Health Power-up][health] <p> Health power-ups restore 3 hearts, up to a maximum of 10
 2. ![Shot Power-up][shot] <p> Shot power-ups provide extra firepower by increasing the number of bullets that you can shoot in quick succession. Currently, there is no limit to the number of shot power-ups that you can accumulate.
 
-When you are defeated, you are given the chance to enter your name (up to 20 characters) to record your play stats on a local high score board. The score board records the top 10 results by score value. Also recorded on the score board are your number of shots fired, your number of shots hit, your accuracy as a percentage, and the number of shot power-ups you acquired.
+When you are defeated, you are given the chance to enter your name (up to 20 characters) to record your play stats on a local high score board.
+
+![Enter your name][gameover]
+
+The score board records the top 10 results by score value. Also recorded on the score board are your number of shots fired, your number of shots hit, your accuracy as a percentage, and the number of shot power-ups you acquired.
+
+![High score board][scoreboard]
 
 ### <a name="enemy-types"></a>Enemy Types
 
@@ -101,7 +109,12 @@ Enemies are randomly spawned in waves every 2 seconds from the top of the screen
 [Kevin Wu]: https://github.com/smashkevin
 [Erin Blackmere]: https://github.com/erin2kb
 
-[screenshot]: http://fellowship-of-the-bus.github.io/SpaceInvadersCoop/images/screenshot.png
+[action]: images/action.png
+[video]: https://www.youtube.com/watch?v=LrigPZlEug0
+[video image]: images/video.png
+[screenshot]: images/screenshot.png
+
+[game logo]: src/main/resources/img/GameLogo.png
 [logo]: src/main/resources/img/FotB-Logo.png
 [releases]: ../../releases
 [sbt]: http://www.scala-sbt.org/
