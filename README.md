@@ -39,7 +39,7 @@ You control a single small spaceship.
   * Speed: 5
   * Shoots one bullet every 0.3 seconds
 
-There are two types of power-ups that drop randomly:
+There are two types of power-ups that spawn randomly:
 
 1. ![Health Power-up][health] <p> Health power-ups restore 3 hearts, up to a maximum of 10
 2. ![Shot Power-up][shot] <p> Shot power-ups provide extra firepower by increasing the number of bullets that you can shoot in quick succession. Currently, there is no limit to the number of shot power-ups that you can accumulate.
