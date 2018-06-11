@@ -56,29 +56,39 @@ The score board records the top 10 results by score value. Also recorded on the 
 
 Enemies are randomly spawned in waves every 2 seconds from the top of the screen. Each wave of enemies increases in difficulty over the previous wave by randomly including more enemies or stronger enemies. The various types of enemies in the game are:
 
-1. ![Drone][drone]<p> Drone
+1. ![Drone][drone]
+
+    Drone
     * Health: 1
     * Difficulty Level: 1
     * Shoots one bullet every 3 seconds
     * Moves diagonally down the screen
 
-2. ![Comic Bee][cosmic bee]<p> Cosmic Bee
+2. ![Comic Bee][cosmic bee]
+
+    Cosmic Bee
     * Health: 1
     * Difficulty Level: 1
     * Moves diagonally down the screen very quickly
 
-3. ![Fighter][fighter]<p> Fighter
+3. ![Fighter][fighter]
+
+    Fighter
     * Health: 3
     * Difficulty Level: 2
     * Shoots one bullet every 2 seconds
     * Moves diagonally down the screen
 
-4. ![Space Turtle][space turtle]<p> Space Turtle
+4. ![Space Turtle][space turtle]
+    
+    Space Turtle
     * Health: 5
     * Difficulty Level: 3
     * Slowly moves diagonally down the screen
 
-5. ![Galactic Dragon][galactic dragon]<p> Galactic Dragon
+5. ![Galactic Dragon][galactic dragon]
+
+    Galactic Dragon
     * Health: 10
     * Difficulty Level: 10
     * Shoots 5 bullets every 2.5 seconds
